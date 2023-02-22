@@ -16,5 +16,4 @@
 ## Web3
 #### https://link3.to/kismiapp 
 #### https://guild.xyz/kismiapp
-#### https://galxe.com/kismiapp 
 
