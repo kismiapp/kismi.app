@@ -1,7 +1,7 @@
 # KISMI.APP & KISMI COMMUNITY
 ### Web2/Web3 Photo Voting App (Gamified real-time Photo Contests).
-### Discord: https://discord.com/invite/YXrRzqG3tC
-### Linktree: https://linktr.ee/kismi
+Discord: https://discord.com/invite/YXrRzqG3tC
+Linktree: https://linktr.ee/kismi
 
 #### KISMI.APP 
 combines social media, competition, and gaming. Vote for your favorite photos of girls and boys and help them rise up the overall gallery rankings to win prizes and be recognized for their creativity. With prize draws, lotteries, and the cutting-edge technology of the web3 industry, the opportunities for growth and fun are endless. Sign up now and join the new revolution in photo sharing.
