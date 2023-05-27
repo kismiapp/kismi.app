@@ -1,0 +1,41 @@
+{
+  "canisters": {
+    "kismi": {
+      "main": "backend/main.mo",
+      "type": "motoko"
+    }, "internet_identity": {
+      "type": "custom",
+      "candid": "backend/internet_identity/internet_identity.did",
+      "wasm": "backend/internet_identity/internet_identity_dev.wasm",
+      "remote": {
+        "id": {
+          "ic": "bd3sg-teaaa-aaaaa-qaaba-cai"
+        }
+      }
+    },
+    "assets": {
+      "dependencies": [
+        "kismi"
+      ],
+      "frontend": {
+        "entrypoint": "dist/index.html"
+      },
+      "source": [
+        "dist/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "packtool": ""
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  },
+  "version": 1
+}
