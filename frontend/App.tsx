@@ -17,6 +17,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import { useAuth } from "./auth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDog, faCat } from '@fortawesome/free-solid-svg-icons';
+
 //import { actorController } from "./utils/canister/actor";
 
 const FileLoader = ({ isOpen, currentIndex, totalChunks, className }) => {
@@ -167,7 +168,9 @@ function App({ setModal, setModalMsg, setFileLoader }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <TopBar setCaller={setCaller} setModal={setModal} setModalMsg={setModalMsg} icpBalance={icpBalance === null ? 0 : icpBalance} pawCoins={pawCoin} profile={profile} setProfile={setProfile} setIsLoading={setIsLoading} loading={isLoading}/>
-      
+      {
+      //{!isLoading && <ProfileEdit setModal={setModal} setModalMsg={setModalMsg} profile={profile} setIsLoading={setIsLoading} />}
+      }
       {!isLoading && <NewProposalComponent setModal={setModal} setModalMsg={setModalMsg} pawCoins={pawCoin} caller={caller} profile={profile} setIsLoading={setIsLoading} loading={isLoading} setFileLoader={setFileLoader} />}
       {!isLoading && <ProposalWall />}
       <ProposalWall/>

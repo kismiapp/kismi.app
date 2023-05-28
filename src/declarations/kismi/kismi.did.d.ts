@@ -77,6 +77,7 @@ export interface _SERVICE {
     [bigint, Uint8Array | number[], bigint],
     Result_5
   >,
+  'addVote' : ActorMethod<[bigint], Result>,
   'airDrop' : ActorMethod<[], Result>,
   'airDrop2' : ActorMethod<[], Result>,
   'balanceOf' : ActorMethod<[Account], bigint>,

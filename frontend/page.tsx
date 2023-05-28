@@ -2,9 +2,9 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCalendar, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import './index.css';
-import { actorController } from '../../../frontend/utils/canister/actor';
-import { useAuth } from "../../auth";
-import ProfileEdit from '../ProfileEdit';
+import { actorController } from 'frontend/utils/canister/actor';
+import { useAuth } from "./auth";
+import ProfileEdit from 'frontend/components/ProfileEdit';
 
 //type setIsLoading={ setIsLoading: Dispatch<SetStateAction<boolean>>; };
 
@@ -26,7 +26,7 @@ export const Loader = ({ message = "Loading..." }) => {
   );
 };
 
-function TopBar({ setModal, setModalMsg, setIsLoading, loading, profile, setProfile, icpBalance, pawCoins, setCaller }) {
+function page({ setModal, setModalMsg, setIsLoading, loading, profile, setProfile, icpBalance, pawCoins, setCaller }) {
   const [ImgSrc, setImgSrc] = useState(null);
   const auth = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -133,7 +133,7 @@ function TopBar({ setModal, setModalMsg, setIsLoading, loading, profile, setProf
   let placeHolderImg = "https://cdn.midjourney.com/de16692f-bda7-418d-8138-36c1a9632c40/0_2.png";
   return (
     <div className="ProfileCard">
-      <div className="kismi-logo"><img src="https://iili.io/Hr7kS5X.png" width="150px" height="50px" alt="Kissmi-logo" /></div>
+      <div className="kismi-logo"><img src="https://iili.io/HrBW9P1.th.png" width="150px" height="50px" alt="Kissmi-logo" /></div>
       <h2>HOME</h2>
       <h2>NOTIFICATION</h2>
       <h2>HISTORY</h2>
@@ -162,4 +162,4 @@ function TopBar({ setModal, setModalMsg, setIsLoading, loading, profile, setProf
   );
 }
 
-export default TopBar;
+export default page;

@@ -168,6 +168,10 @@ const NewProposalForm = ({ setIsLoading, loading, profile, caller, pawCoins, set
   return (
     <div className="NewProposalCard" >
       <h2>Upload picture to contest</h2>
+      <label>
+       Name or username:{" "}
+       <input type="text" name="description" placeholder="Enter name or username" onChange={e => setDescription(e.target.value)} />
+     </label>
       <label className="file-input">
         Select a file:{" "}
         <input type="file" name="file" onChange={e => { onFileChange(e) }} />

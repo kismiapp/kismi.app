@@ -103,6 +103,7 @@ service : {
   addPawCoins: () -> () oneway;
   addProposalChunk: (nat, blob) -> (Result);
   addProposalVideoChunk: (nat, vec nat8, nat) -> (Result_5);
+  addVote: (nat) -> (Result);
   airDrop: () -> (Result);
   airDrop2: () -> (Result);
   balanceOf: (Account) -> (nat) query;

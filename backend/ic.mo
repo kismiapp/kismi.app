@@ -51,4 +51,4 @@ module {
     let crc32 = CRC32.ofArray(accIdPart);
     Array.equal(beBytes(crc32), checksumPart, Nat8.equal)
   };
-}
+};

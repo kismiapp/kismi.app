@@ -4,6 +4,7 @@ import { faUser, faCalendar, faCheckCircle, faSmile } from '@fortawesome/free-so
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useAuth } from '../../auth';
 import { useNavigate } from 'react-router-dom';
+import { FaVoteYea } from 'react-icons/fa';
 
 function LoadingContent({ isLoading, imgSrc }) {
   if (!isLoading) {
@@ -28,6 +29,7 @@ function ProposalCard({ proposal }) {
   const [videoUrl, setVideoUrl] = useState(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const navigate = useNavigate();
+  const addVote= backendActor.addVote();
 
   // ...
 
@@ -107,10 +109,12 @@ function ProposalCard({ proposal }) {
     //return blob;
   }
 
-
   const getContent = async () => {
     let caller = await backendActor.getContent(Number(proposal.id));
     let profile = await backendActor.getProposalProfilePic(Number(proposal.id));
+    const [kissCount, setKissCount] = useState(Number(proposal.icp));
+    setKissCount(prevCount => prevCount + 1);
+    
     if (profile) {
       // console.log("profile pic",profileprofilePic)
       setContent(caller)
@@ -121,6 +125,7 @@ function ProposalCard({ proposal }) {
   }
 
   /*
+          <h6>{profileName && profileName}</h6>
   <img className="profile-pic" src={profilePic ? profilePic : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"} alt="Profile" />
           <div>
             <FontAwesomeIcon icon={faCalendar} />
@@ -128,20 +133,18 @@ function ProposalCard({ proposal }) {
                 <h2>Country: {proposal.description}</h2>
         <div className="comments-section">
       </div>
+          <div className="ProposalCard" onClick={() => { navigate(`/proposal/${Number(proposal.id)}`) }}>
+           
   */
   return (
-    <div className="ProposalCard" onClick={() => { navigate(`/proposal/${Number(proposal.id)}`) }}>
+    <div className="ProposalCard">
       <div className="image-container">
-        <h6>{profileName && profileName}</h6>
+        <h6>{proposal.description}</h6>
         {content && renderContent()}
         <div className="card-footer">
-          <div>
-            <FontAwesomeIcon icon={faSmile} />
-            <span>{`${Number(proposal.icp)}`}</span>
-          </div>
-          <div>
-            <FontAwesomeIcon icon={faCheckCircle} />
-            <span>{`Completed: ${Object.keys(proposal.completed).length}`}</span>
+          <button className="kissButton" onClick={async () => { await backendActor.addVote(proposal.id) }}>KISS</button>&nbsp;
+          <div className="kissCount">
+            {`${Number(proposal.icp)}  `}<img src="https://iili.io/Hr5iCR2.png"></img>
           </div>
         </div>
       </div>

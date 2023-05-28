@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 .ProposalWall {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   position: relative;
   height: 100vh;
   min-width: 500px;
@@ -33,17 +36,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  border-radius: 10px;
+  /*padding: 20px;*/
+  border-radius: 40px;
   background: #f3f3f3;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-  margin-bottom: 5px;
+  /*margin-bottom: 5px;*/
   /* increased margin-bottom */
   max-width: 244px;
   /* increased max-width */
   min-width: 100px;
   margin: 20px;
-  max-height: 360px;
+  max-height: 300px;
   min-height: 100px;
   color: #424242;
 }
@@ -271,21 +274,70 @@
 .image-container img {
   /* Adjust the width and height according to your requirements */
   width: 100%;
-  height: auto;
+  height: 100%;
 }
 
 .image-container h6 {
   position: absolute;
-  top: 0;
-  right: 0;
-  margin: 0;
-  padding: 5px;
-  background-color: rgba(0, 0, 0, 0.7);
+  left: 0;
+  padding: 8px;
+  background-color: #000000b3;
   color: #fff;
-  font-size: 12px;
+  font-size: 13px;
   text-align: left;
+  border-radius: 45px;
+  margin: 5px 0 0 5px;
 }
 
-.image-container .card-footer {
-  font-size: 12px;
+.ProposalCard .card-footer {
+  position: absolute;
+  display: flex;
+  /* flex-direction: row; */
+  /* align-items: center; */
+  /* justify-content: space-evenly; */
+  /* top: 0; */
+  /* right: 0; */
+  margin: 0;
+  bottom: 0;
+  /* padding-right: 5%; */
+  margin-bottom: 5px;
+  margin-left: 15px;
+  /* align-items: start;*/
+}
+
+.kissButton {
+  width: 89px;
+  height: 30px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 99.5%;
+  background: #E60023;
+  border-radius: 50px;
+  color: #FFFFFF;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.kissCount {
+  width: 89px;
+  height: 30px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 99.5%;
+  /* identical to box height, or 20px */
+  color: #FFFFFF;
+  border: 1px solid #E60023;
+  border-radius: 50px;
+  text-align: center;
+  background-color: transparent;
+  padding-top: 5px;
+}
+
+.kissCount img {
+  width: 28px;
+  height: 16px;
 }

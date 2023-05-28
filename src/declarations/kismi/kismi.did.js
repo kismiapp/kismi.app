@@ -77,6 +77,7 @@ export const idlFactory = ({ IDL }) => {
         [Result_5],
         [],
       ),
+    'addVote' : IDL.Func([IDL.Nat], [Result], []),
     'airDrop' : IDL.Func([], [Result], []),
     'airDrop2' : IDL.Func([], [Result], []),
     'balanceOf' : IDL.Func([Account], [IDL.Nat], ['query']),

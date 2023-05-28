@@ -472,6 +472,36 @@ public func toNat8(x : Content) : async [Nat8] {
                         _airDrop(newAccount);
     }; 
 
+/*
+    let newProposal:Proposal ={
+        id=newid;
+        icp=proposal.icp;
+        description=proposal.description;
+        content=proposal.content;
+        icpWallet=msg.caller;
+        completed=false;
+        owner=msg.caller;
+    };
+*/
+  public shared (msg) func addVote(proposalId : Nat) : async Result.Result<(), Text> {
+    switch (proposals.get(Nat.toText(proposalId))) {
+      case null { #err "" };
+      case (?found) {
+        let newProposal:Proposal ={
+          id=proposalId;
+          icp=found.icp+1;
+          description=found.description;
+          content=found.content;
+          icpWallet=msg.caller;
+          completed=false;
+          owner=msg.caller;
+        };
+        ignore proposals.replace(Nat.toText(proposalId), newProposal);
+        return #ok();
+      };
+    };
+  };
+
     public shared(msg) func addNewProposal(proposal:ProposalCall):async Result.Result<Nat,Text>{
     let defaultSub:Account.Subaccount = _defaultSub();
     let account:Account = {
