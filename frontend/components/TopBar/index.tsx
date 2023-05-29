@@ -30,7 +30,6 @@ function TopBar({ setModal, setModalMsg, setIsLoading, loading, profile, setProf
   const [ImgSrc, setImgSrc] = useState(null);
   const auth = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  //const { isAuthenticated, identity,login,backendActor,logout } = useAuth();
   const { isAuthenticated, identity, login, backendActor, logout } = useAuth();
 
   useEffect(() => {

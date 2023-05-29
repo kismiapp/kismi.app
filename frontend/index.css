@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -13,11 +15,9 @@ body {
 }
 
 
-/* Parallax.css */
-
 body,
 html {
-  background: url("https://iili.io/Hrq3DDF.png") no-repeat;
+  background: url("https://iili.io/Hrq3DDF.png");
   /*background: url("../assets/FB_background.png") no-repeat;*/
   background-size: cover;
 }
@@ -29,7 +29,6 @@ html {
   height: 70vh;
   /* Adjust this to position the loader */
 }
-
 
 .loader {
   display: flex;

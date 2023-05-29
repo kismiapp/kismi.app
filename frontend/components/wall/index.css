@@ -38,8 +38,9 @@
   align-items: center;
   /*padding: 20px;*/
   border-radius: 40px;
+  /*
   background: #f3f3f3;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);*/
   /*margin-bottom: 5px;*/
   /* increased margin-bottom */
   max-width: 244px;
@@ -340,4 +341,111 @@
 .kissCount img {
   width: 28px;
   height: 16px;
+}
+
+.countdownTimer h1 {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 99.5%;
+  /* identical to box height, or 50px */
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.countdownTimer h2 {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 99.5%;
+  /* identical to box height, or 30px */
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.countdownTimer h3 {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 99.5%;
+  /* identical to box height, or 50px */
+
+  text-align: center;
+
+  color: #FFFFFF;
+}
+
+.countdownTimer h4 {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 99.5%;
+  /* identical to box height, or 20px */
+
+  text-align: center;
+
+  color: #FFFFFF;
+}
+
+.expired-notice {
+  text-align: center;
+  padding: 2rem;
+  border: 1px solid #ebebeb;
+  border-radius: 0.25rem;
+  margin: 0.5rem;
+}
+
+.expired-notice>span {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: red;
+}
+
+.expired-notice>p {
+  font-size: 1.5rem;
+}
+
+.show-counter {
+  padding: 0.5rem;
+}
+
+.show-counter .countdown-link {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  padding: 0.5rem;
+  border: 1px solid #ebebeb;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  color: #000;
+}
+
+.show-counter .countdown {
+  line-height: 1.25rem;
+  padding: 0 0.75rem 0 0.75rem;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.show-counter .countdown.danger {
+  color: #ff0000;
+}
+
+.show-counter .countdown>p {
+  margin: 0;
+}
+
+.show-counter .countdown>span {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  line-height: 1rem;
 }

@@ -17,6 +17,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import { useAuth } from "./auth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDog, faCat } from '@fortawesome/free-solid-svg-icons';
+import CountDownTimer from "./components/CountdownTimer/CountdownTimer";
 
 //import { actorController } from "./utils/canister/actor";
 
@@ -119,12 +120,19 @@ export const Loader = ({ message = "Loading..." }) => {
 function App({ setModal, setModalMsg, setFileLoader }) {
   const [visibility, setVisibility] = useState([true, true, true]);
   const navigate = useNavigate();
-  const {isAuthenticated, identity, login, backendActor, logout } = useAuth();
+  const { isAuthenticated, identity, login, backendActor, logout } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState(null);
   const [caller, setCaller] = useState(null);
   const [icpBalance, setBalance] = useState(null);
   const [pawCoin, setPawCoin] = useState(0);
+
+  //CountdownTimer
+  const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
+  const NOW_IN_MS = new Date().getTime();
+  const dateTimeAfterThreeDays = NOW_IN_MS + THREE_DAYS_IN_MS;
+  const [targetDate, setTargetDate] = useState(new Date(dateTimeAfterThreeDays));
+
 
   useEffect(() => {
     console.log("hi")
@@ -163,17 +171,19 @@ function App({ setModal, setModalMsg, setFileLoader }) {
               {!isLoading && <ProposalWall />}
               <Menu visibility={visibility} toggleVisibility={setVisibility} />
               {!isLoading && <ProfileEdit setModal={setModal} setModalMsg={setModalMsg} profile={profile} setIsLoading={setIsLoading} />}
+                    {!isLoading && <CountDownTimer targetDate={targetDate} />}
+                          {!isLoading && <ProposalWall />}
       */
   console.log("last caller?", caller)
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <TopBar setCaller={setCaller} setModal={setModal} setModalMsg={setModalMsg} icpBalance={icpBalance === null ? 0 : icpBalance} pawCoins={pawCoin} profile={profile} setProfile={setProfile} setIsLoading={setIsLoading} loading={isLoading}/>
+      <TopBar setCaller={setCaller} setModal={setModal} setModalMsg={setModalMsg} icpBalance={icpBalance === null ? 0 : icpBalance} pawCoins={pawCoin} profile={profile} setProfile={setProfile} setIsLoading={setIsLoading} loading={isLoading} />
       {
-      //{!isLoading && <ProfileEdit setModal={setModal} setModalMsg={setModalMsg} profile={profile} setIsLoading={setIsLoading} />}
+        //{!isLoading && <ProfileEdit setModal={setModal} setModalMsg={setModalMsg} profile={profile} setIsLoading={setIsLoading} />}
       }
       {!isLoading && <NewProposalComponent setModal={setModal} setModalMsg={setModalMsg} pawCoins={pawCoin} caller={caller} profile={profile} setIsLoading={setIsLoading} loading={isLoading} setFileLoader={setFileLoader} />}
-      {!isLoading && <ProposalWall />}
-      <ProposalWall/>
+      
+      <ProposalWall />
     </div>
   )
 }

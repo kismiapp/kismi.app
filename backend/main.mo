@@ -497,6 +497,12 @@ public func toNat8(x : Content) : async [Nat8] {
           owner=msg.caller;
         };
         ignore proposals.replace(Nat.toText(proposalId), newProposal);
+        let iter = proposals.vals();
+        for (key in proposals.vals()) {
+          let buf = Buffer.fromIter<Proposal>(iter);
+        
+        };
+        
         return #ok();
       };
     };
