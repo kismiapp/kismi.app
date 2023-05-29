@@ -183,7 +183,7 @@ function App({ setModal, setModalMsg, setFileLoader }) {
       }
       {!isLoading && <NewProposalComponent setModal={setModal} setModalMsg={setModalMsg} pawCoins={pawCoin} caller={caller} profile={profile} setIsLoading={setIsLoading} loading={isLoading} setFileLoader={setFileLoader} />}
       
-      <ProposalWall />
+      {!isLoading && <ProposalWall />}
     </div>
   )
 }
