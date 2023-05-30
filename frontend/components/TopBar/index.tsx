@@ -5,6 +5,9 @@ import './index.css';
 import { actorController } from '../../../frontend/utils/canister/actor';
 import { useAuth } from "../../auth";
 import ProfileEdit from '../ProfileEdit';
+import {
+useNavigate,
+} from "react-router-dom"
 
 //type setIsLoading={ setIsLoading: Dispatch<SetStateAction<boolean>>; };
 
@@ -28,6 +31,8 @@ export const Loader = ({ message = "Loading..." }) => {
 
 function TopBar({ setModal, setModalMsg, setIsLoading, loading, profile, setProfile, icpBalance, pawCoins, setCaller }) {
   const [ImgSrc, setImgSrc] = useState(null);
+  const navigate = useNavigate()
+
   const auth = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated, identity, login, backendActor, logout } = useAuth();
