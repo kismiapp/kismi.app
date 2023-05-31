@@ -5,13 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faCalendar, faCheckCircle, faUser, faDog, faCat } from '@fortawesome/free-solid-svg-icons';
 import { FaUser } from 'react-icons/fa';
 import { BiMessageAdd, BiMessageRounded } from 'react-icons/bi';
-
-
-
-
-
-
-
 import './index.css';
 
 

@@ -2,12 +2,8 @@ import React, {  useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './index.css';
 import { useAuth } from "../../auth";
-import {
-useNavigate,
-} from "react-router-dom"
-
-
-
+import { useNavigate } from "react-router-dom"
+import ProfileEdit from '../../components/ProfileEdit';
 
 function TopBar({  setIsLoading, loading, profile, setProfile, icpBalance, pawCoins, setCaller }) {
   const [ImgSrc, setImgSrc] = useState(null);

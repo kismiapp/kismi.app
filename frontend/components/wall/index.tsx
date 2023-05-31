@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Slider } from '@mui/material';
 import "./index.css";
 import { faUser, faCalendar, faCheckCircle, faSmile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -153,19 +154,24 @@ function ProposalCard({ proposal }) {
 
 const ProposalWall = () => {
   //const { backendActor, isAuthenticated } = useAuth();
-  const { backendActor,isAuthenticated } = useAuth();
+  const { backendActor, isAuthenticated } = useAuth();
   const [displayedProposals, setDisplayedProposals] = useState([]);
+  const [sliderValue, setSliderValue] = useState(6);
 
   useEffect(() => {
     getAllProposals()
-  }, [isAuthenticated,backendActor])
+  }, [isAuthenticated, backendActor])
 
   const getAllProposals = async () => {
-    if(backendActor){
+    if (backendActor) {
       let caller = await backendActor.getAllProposals();
       setDisplayedProposals(caller)
     }
   }
+
+  const handleSliderChange = (event, value) => {
+    setSliderValue(value);
+  };
 
   const handleScroll = (e) => {
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
@@ -175,12 +181,22 @@ const ProposalWall = () => {
       setDisplayedProposals(prevProposals => [...prevProposals, ...newProposals]);
     }
   };
+  /*    <div className="ProposalWall" onScroll={handleScroll}>
+      <Slider aria-label="Slider" defaultValue={3} color="secondary" onChange={handleSliderChange} />
+  */
   return (
-    <div className="ProposalWall" onScroll={handleScroll}>
-      {displayedProposals && displayedProposals.map(proposal => (
-        <ProposalCard key={Number(proposal.id)} proposal={proposal} />
-      ))}
-    </div>
+    <>
+      <div className="mt-2 hover:opacity-100 opacity-50 transition-all">
+        <div className="text-center text-xs opacity-50">Columns: {sliderValue}</div>
+        <Slider aria-label="Columns" value={sliderValue} onChange={handleSliderChange} min={1} max={6} step={1} />
+      </div>
+
+      <div className="ProposalWall" onScroll={handleScroll} style={{ width: `${sliderValue * 250}px` }}>
+        {displayedProposals && displayedProposals.map(proposal => (
+          <ProposalCard key={Number(proposal.id)} proposal={proposal} />
+        ))}
+      </div>
+    </>
   );
 
 };

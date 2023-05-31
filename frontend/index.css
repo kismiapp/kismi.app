@@ -259,3 +259,16 @@ html {
   align-items: center;
   justify-content: center;
 }
+
+.addCards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-left: 5px;
+  margin-right: 5px;
+
+  /*
+  justify-content: center;
+  align-items: center;
+  */
+}

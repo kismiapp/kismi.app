@@ -23,15 +23,6 @@ import {
 } from "react-router-dom"
 import { useAuth } from "./auth"
 
-
-
-
-
-
-
-
-
-
 function AppPage() {
   const [modal, setModal] = useState(false)
   const [modalMsg, setModalMsg] = useState("")
@@ -40,6 +31,7 @@ function AppPage() {
     currentIndex: 0,
     totalChunks: 0,
   })
+
   const [visibility, setVisibility] = useState([true, true, true])
   const { isAuthenticated, identity, login, backendActor, logout } = useAuth()
   const [isLoading, setIsLoading] = useState(true)
@@ -75,7 +67,7 @@ function AppPage() {
     setPawCoin(pawCoins)
   }
 
-  useEffect(() => {}, [modal, fileloader])
+  useEffect(() => { }, [modal, fileloader])
 
   return (
     <>
@@ -94,17 +86,17 @@ function AppPage() {
         }}
       >
         <Router>
-        <TopBar
-          setCaller={setCaller}
-          icpBalance={icpBalance === null ? 0 : icpBalance}
-          pawCoins={pawCoin}
-          profile={profile}
-          setProfile={setProfile}
-          setIsLoading={setIsLoading}
-          loading={isLoading}
-        />
+          <TopBar
+            setCaller={setCaller}
+            icpBalance={icpBalance === null ? 0 : icpBalance}
+            pawCoins={pawCoin}
+            profile={profile}
+            setProfile={setProfile}
+            setIsLoading={setIsLoading}
+            loading={isLoading}
+          />
           <Routes>
-          <Route path="" element={<Home isLoading={isLoading} />} />
+            <Route path="" element={<Home isLoading={isLoading} />} />
             <Route path="/proposal/:id" element={<Proposal />} />
             <Route
               path="/user"
