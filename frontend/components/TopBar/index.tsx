@@ -53,7 +53,7 @@ function TopBar({  setIsLoading, loading, profile, setProfile, icpBalance, pawCo
             <img className="profile-pic" src={ImgSrc ? ImgSrc : placeHolderImg} alt="Profile" onClick={handleImageClick} />
             {isMenuOpen && (
               <div className="profile-menu">
-                <button onClick={()=>{console.log("what sup"),navigate("/user")}}>Edit Profile</button>
+                <button onClick={()=>{navigate("/user")}}>Edit Profile</button>
                 <button>Placeholder</button>
                 <button onClick={async () => { logout() }}>Log out</button>
               </div>

@@ -11,7 +11,7 @@ function Home({ isLoading }) {
   return (
     <>
       <CountDownTimer targetDate={targetDate} />
-      {!isLoading && <ProposalWall />}
+       <ProposalWall />
     </>
   )
 }

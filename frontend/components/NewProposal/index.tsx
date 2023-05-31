@@ -1,10 +1,8 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
-import { actorController } from '../../../frontend/utils/canister/actor';
 import { useAuth } from '../../auth';
-import { MAX_CHUNK_SIZE } from "frontend/utils";
 
-const NewProposalForm = ({ setIsLoading, loading, profile, caller, pawCoins, setModal, setModalMsg, setFileLoader }) => {
+const NewProposalForm = ({ setIsLoading, loading, setModal, setModalMsg, setFileLoader }) => {
   const { backendActor, isAuthenticated } = useAuth();
 
   const [proposalType, setProposalType] = useState("Image");
@@ -120,50 +118,10 @@ const NewProposalForm = ({ setIsLoading, loading, profile, caller, pawCoins, set
     console.log("file", file);
     if (file) {
       uploadFileInChunks(file);
-      /*
-    } else {
-      const proposal = {
-        description,
-        icp,
-        content: { "Text": content }
-      }
-      // Handle the case when text is submitted
-      console.log("debugging proposal", proposal);
-      await backendActor.addNewProposal(proposal);
-          */
     }
   };
 
-  ///anon login no sale
-  //if(profile && caller =="2vxsx-fae" || pawCoins<100){
-  //   return null
-  // }
-  //          <option value="Text">Text</option>
-  //          <option value="Video">Video</option>
-  /*
-        <label>
-       Description:{" "}
-       <input type="text" name="description" placeholder="Enter description" onChange={e => setDescription(e.target.value)} />
-     </label>
-        <label>
-       ICP:{" "}
-       <input type="number" name="icp" min="0" value={icp} onChange={e => setIcp(Number(e.target.value))} />
-     </label>
-           {proposalType === "Text" ? (
-       <label>
-         Text:{" "}
-         <textarea name="text" value={content} onChange={e => setContent(e.target.value)} />
-       </label>
-     ) : (
-             )}
  
-                   <label>
-        Type:{" "}
-        <select value={proposalType} onChange={e => setProposalType(e.target.value)}>
-          <option value="Image">Image</option>
-        </select>
-      </label>
-  */
 
   return (
     <div className="NewProposalCard" >

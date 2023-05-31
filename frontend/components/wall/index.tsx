@@ -153,16 +153,18 @@ function ProposalCard({ proposal }) {
 
 const ProposalWall = () => {
   //const { backendActor, isAuthenticated } = useAuth();
-  const { backendActor } = useAuth();
+  const { backendActor,isAuthenticated } = useAuth();
   const [displayedProposals, setDisplayedProposals] = useState([]);
 
   useEffect(() => {
     getAllProposals()
-  }, [])
+  }, [isAuthenticated,backendActor])
 
   const getAllProposals = async () => {
-    let caller = await backendActor.getAllProposals();
-    setDisplayedProposals(caller)
+    if(backendActor){
+      let caller = await backendActor.getAllProposals();
+      setDisplayedProposals(caller)
+    }
   }
 
   const handleScroll = (e) => {
