@@ -51,7 +51,7 @@ function TopBar({  setIsLoading, loading, profile, setProfile, icpBalance, pawCo
               <div className="profile-menu">
                 <button onClick={()=>{navigate("/user")}}>Edit Profile</button>
                 <button>Placeholder</button>
-                <button onClick={async () => { logout() }}>Log out</button>
+                <button onClick={async () => { logout(),navigate("/") }}>Log out</button>
               </div>
             )}
           </div>

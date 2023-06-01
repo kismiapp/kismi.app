@@ -33,8 +33,10 @@ export const idlFactory = ({ IDL }) => {
     'icpWallet' : IDL.Principal,
   });
   const Time = IDL.Int;
+  const Admin = IDL.Bool;
   const Profile = IDL.Record({
     'lastProposal' : IDL.Opt(Time),
+    'admin' : Admin,
     'proposalsCompleted' : IDL.Nat,
     'name' : IDL.Text,
     'badget' : IDL.Bool,
@@ -58,7 +60,6 @@ export const idlFactory = ({ IDL }) => {
     'name' : IDL.Text,
     'profilePic' : IDL.Opt(IDL.Vec(IDL.Nat8)),
   });
-  const PrincipalArray = IDL.Vec(IDL.Principal);
   const Result_1 = IDL.Variant({
     'ok' : IDL.Record({ 'e8s' : IDL.Nat64 }),
     'err' : IDL.Text,
@@ -78,8 +79,6 @@ export const idlFactory = ({ IDL }) => {
         [],
       ),
     'addVote' : IDL.Func([IDL.Nat], [Result], []),
-    'airDrop' : IDL.Func([], [Result], []),
-    'airDrop2' : IDL.Func([], [Result], []),
     'balanceOf' : IDL.Func([Account], [IDL.Nat], ['query']),
     'bannProposal' : IDL.Func([IDL.Nat], [Result_4], []),
     'caller' : IDL.Func([], [IDL.Text], ['query']),
@@ -97,12 +96,12 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Opt(ProposalProfile)],
         ['query'],
       ),
-    'getStudents' : IDL.Func([], [PrincipalArray], []),
     'getVideoChunk' : IDL.Func(
         [IDL.Nat, IDL.Nat],
         [IDL.Vec(IDL.Nat8)],
         ['query'],
       ),
+    'makeAdmin' : IDL.Func([IDL.Text], [IDL.Bool], []),
     'name' : IDL.Func([], [IDL.Text], ['query']),
     'parseControllersFromCanisterStatusErrorIfCallerNotController' : IDL.Func(
         [IDL.Text],

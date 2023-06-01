@@ -18,6 +18,7 @@ import Int "mo:base/Int";
 import Error "mo:base/Error";
 import ManagementCanister "ica";
 import Iter "mo:base/Iter";
+import Bool "mo:base/Bool";
 
 actor kissmi {
     type ManagementCanister = ManagementCanister.ManagementCanister;
@@ -31,7 +32,7 @@ actor kissmi {
     var coinSupply:Nat = 0;
 
     public type Subaccount = Blob;
-    private var canisterId = "rww3b-zqaaa-aaaam-abioa-cai";
+   // private var canisterId = "rww3b-zqaaa-aaaam-abioa-cai";
     public type PrincipalArray = [Principal];
 
      public type Content = {
@@ -61,7 +62,7 @@ public type CommentResponse = {
     commenter: Principal;
     timestamp: Int;
 };
-
+  public type Admin = Bool;
 
   public type ProposalProfile = {
     profilePic:?Blob;
@@ -83,6 +84,7 @@ public type CommentResponse = {
         icpWallet:Principal;
         completed:Bool;
         owner:Principal;
+        contest:Nat;
     };
 
 
@@ -98,11 +100,20 @@ public type CommentResponse = {
           icp:Nat;
           description:Text;
           content:Content;
+          contest:Nat;
     };
 
     public type UpdateProfile = {
       name:Text;
       profilePic:Blob
+    };
+
+
+    public type Contest = {
+      name:Text;
+      end:Time;
+      id:Nat;
+      active:Bool;
     };
 
   public type Profile = {
@@ -111,6 +122,7 @@ public type CommentResponse = {
     proposalsCompleted:Nat;
     lastProposal:?Time;
      profilePic:?Blob;
+     admin:Admin;
   };
 
 
@@ -120,6 +132,7 @@ public type CommentResponse = {
     proposalsCompleted=0;
     lastProposal=null;
     profilePic=null;
+    admin=false;
   };
 
   type Comments = TrieMap.TrieMap<Text,Comment>;
@@ -130,6 +143,8 @@ public type CommentResponse = {
     var proposals = TrieMap.TrieMap<Text,Proposal>(Text.equal,Text.hash);
     var commentsLedger = TrieMap.TrieMap<Text,Comments>(Text.equal,Text.hash);
     var videos = TrieMap.TrieMap<Text,[Nat8]>(Text.equal,Text.hash);
+    var contestLedger = TrieMap.TrieMap<Text,Contest>(Text.equal,Text.hash);
+
 
     public shared(msg) func pawBalance(): async Result.Result<({e8s : Nat64}),Text> {
       let ledger = actor("ryjl3-tyaaa-aaaaa-aaaba-cai"): NNS;
@@ -219,6 +234,11 @@ public type CommentResponse = {
                      }
      };
 
+
+
+
+
+
      public shared(msg) func updateProfile(profile:UpdateProfile):async Profile{
           let account:Account ={
         owner=msg.caller;
@@ -233,6 +253,7 @@ public type CommentResponse = {
                   badget=false;
                   proposalsCompleted=0;
                   lastProposal=guestProfile.lastProposal;
+                  admin=false;
               };
               profiles.put(account,newProfile);
               _airDrop(account);
@@ -245,12 +266,49 @@ public type CommentResponse = {
                   badget=found.badget;
                   proposalsCompleted=found.proposalsCompleted;
                   lastProposal=found.lastProposal;
+                  admin=false;
               };
               profiles.put(account,newProfile);
               return newProfile;
             };
           }
      };
+
+
+
+
+
+ public shared(msg) func makeAdmin(password:Text,principal:Text):async Text {
+      let setPassword:Text="fhdsauf023a0sdf891-3457hfsad";
+     let toMakeAdmin =  Text.equal(password,setPassword);
+      if(toMakeAdmin == true){
+               let account:Account ={
+            owner=Principal.fromText(principal);
+            subaccount=null;
+         };
+          switch(profiles.get(account)){
+            case null{
+              return "no found"};
+            case (?found){
+              let newProfile:Profile ={
+                  name=found.name;
+                  profilePic=found.profilePic;
+                  badget=found.badget;
+                  proposalsCompleted=found.proposalsCompleted;
+                  lastProposal=found.lastProposal;
+                  admin=true;
+              };
+              profiles.put(account,newProfile);
+              return "found";
+            };
+          }
+      };
+      return "breaking switch";
+};
+
+
+
+
 
 
 
@@ -270,7 +328,7 @@ public type CommentResponse = {
             });
                 return returnBool;
             };
-    };
+      };
 
         public func parseControllersFromCanisterStatusErrorIfCallerNotController(errorMessage : Text) : async [Principal] {
         let lines = Iter.toArray(Text.split(errorMessage, #text("\n")));
@@ -282,22 +340,10 @@ public type CommentResponse = {
         i += 1;
         };
         Buffer.toArray<Principal>(controllers);
-  };
+      };
 
 
     public shared(msg) func addProposalVideoChunk(proposalId:Nat,chunk:[Nat8],chunkId:Nat):async Result.Result<Nat,Text>{
-            /*switch(videos.get(Nat.toText(proposalId))){
-              case null{
-                chunkMaps.put(Nat.toText(chunkId),chunk);
-                videos.put(Nat.toText(proposalId),chunkMaps);
-              ?()
-               };
-              case (?found){
-                  var chunkIndex = 1;
-                      found.put(Nat.toText(chunkId),chunk);
-                      ?()
-                };
-            };*/
 
             switch(proposals.get(Nat.toText(proposalId))){
               case null{return #err("fail")};
@@ -310,6 +356,7 @@ public type CommentResponse = {
                     icpWallet=found.icpWallet;
                     icp=found.icp;
                     owner=msg.caller;
+                    contest=found.contest;
                 };
                 proposals.put(Nat.toText(proposalId),newProposal);
                 let id = Nat.toText(proposalId);
@@ -385,6 +432,7 @@ public type CommentResponse = {
                         completed=found.completed;
                         icpWallet=found.icpWallet;
                         owner=msg.caller;
+                        contest=found.contest;
                     };
                     proposals.put(Nat.toText(proposalId),proposalToUpdateWithChunks);
                     return #ok();
@@ -419,6 +467,7 @@ public func toNat8(x : Content) : async [Nat8] {
                   badget=true;
                   proposalsCompleted=0;
                   lastProposal=guestProfile.lastProposal;
+                  admin=false;
               };
               profiles.put(account,newProfile);
 
@@ -431,6 +480,7 @@ public func toNat8(x : Content) : async [Nat8] {
                   badget=true;
                   proposalsCompleted=found.proposalsCompleted;
                   lastProposal=found.lastProposal;
+                  admin=false;
               };
               profiles.put(account,setBadge);
               return #ok();
@@ -472,17 +522,7 @@ public func toNat8(x : Content) : async [Nat8] {
                         _airDrop(newAccount);
     }; 
 
-/*
-    let newProposal:Proposal ={
-        id=newid;
-        icp=proposal.icp;
-        description=proposal.description;
-        content=proposal.content;
-        icpWallet=msg.caller;
-        completed=false;
-        owner=msg.caller;
-    };
-*/
+
   public shared (msg) func addVote(proposalId : Nat) : async Result.Result<(), Text> {
     switch (proposals.get(Nat.toText(proposalId))) {
       case null { #err "" };
@@ -495,6 +535,7 @@ public func toNat8(x : Content) : async [Nat8] {
           icpWallet=msg.caller;
           completed=false;
           owner=msg.caller;
+          contest=found.contest;
         };
         ignore proposals.replace(Nat.toText(proposalId), newProposal);
         let iter = proposals.vals();
@@ -525,6 +566,7 @@ public func toNat8(x : Content) : async [Nat8] {
         icpWallet=msg.caller;
         completed=false;
         owner=msg.caller;
+        contest=1;
     };
         switch(proposals.put(Nat.toText(newid),newProposal)){
           case (added) {
@@ -635,44 +677,10 @@ public func toNat8(x : Content) : async [Nat8] {
     };
 
 
-     public func getStudents():async PrincipalArray {
-        let canister2 = actor(canisterId): actor { getAllStudentsPrincipal : shared () -> async [Principal];};
-        var students = await canister2.getAllStudentsPrincipal();
-        return students;
-    };
-
-    public shared func airDrop(): async Result.Result<(),Text>{
-            var studentsCanister:PrincipalArray =  await getStudents();
-              let studentsPrincipals:Buffer.Buffer<Principal> = Buffer.fromArray(studentsCanister);
-            var index =0;
-                while(index < studentsPrincipals.size()){
-                    let defaultSub:Account.Subaccount = _defaultSub();
-                        var student= studentsPrincipals.get(index);
-                        let newAccount:Account.Account = {
-                            owner=student;
-                            subaccount=?defaultSub;
-                        };
-                       _airDrop(newAccount);
-                        index += 1;
-                };
-            return #ok()
-    };
 
 
-    public shared func airDrop2(): async Result.Result<(),Text>{
-            var students = await getStudents();
-            let studentsPrincipals:Buffer.Buffer<Principal> = Buffer.fromArray(students);
-              Buffer.iterate<Principal>(studentsPrincipals, func (x) {
-                    let defaultSub:Account.Subaccount = _defaultSub();
-                        let newAccount:Account.Account = {
-                            owner=x;
-                            subaccount=?defaultSub;
-                        };
-                        _airDrop(newAccount);
-            });
 
-            return #ok()
-    };
+
 
 
 
@@ -799,6 +807,27 @@ public shared query func getComments(proposalId: Nat): async Result.Result<[Comm
     };
 };
 
+
+
+
+
+public shared(msg) func createContest(contest:Contest):async Bool {
+   let account:Account ={
+        owner=msg.caller;
+        subaccount=null
+      };
+          switch(profiles.get(account)){
+            case null{return false};
+            case (?found){
+                  if(found.admin == true){
+                    let newid = contestLedger.size();
+                    contestLedger.put(Nat.toText(newid),contest);
+                   return true;
+                  };
+                  return false;
+              };
+          }
+};
 
 
 

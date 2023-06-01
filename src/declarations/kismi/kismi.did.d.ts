@@ -5,6 +5,7 @@ export interface Account {
   'owner' : Principal,
   'subaccount' : [] | [Subaccount],
 }
+export type Admin = boolean;
 export interface CommentResponse {
   'id' : bigint,
   'commenter' : Principal,
@@ -15,9 +16,9 @@ export interface CommentResponse {
 export type Content = { 'Text' : string } |
   { 'Image' : Uint8Array | number[] } |
   { 'Video' : bigint };
-export type PrincipalArray = Array<Principal>;
 export interface Profile {
   'lastProposal' : [] | [Time],
+  'admin' : Admin,
   'proposalsCompleted' : bigint,
   'name' : string,
   'badget' : boolean,
@@ -78,8 +79,6 @@ export interface _SERVICE {
     Result_5
   >,
   'addVote' : ActorMethod<[bigint], Result>,
-  'airDrop' : ActorMethod<[], Result>,
-  'airDrop2' : ActorMethod<[], Result>,
   'balanceOf' : ActorMethod<[Account], bigint>,
   'bannProposal' : ActorMethod<[bigint], Result_4>,
   'caller' : ActorMethod<[], string>,
@@ -93,8 +92,8 @@ export interface _SERVICE {
   'getProfile' : ActorMethod<[], Profile>,
   'getProposal' : ActorMethod<[bigint], Result_2>,
   'getProposalProfilePic' : ActorMethod<[bigint], [] | [ProposalProfile]>,
-  'getStudents' : ActorMethod<[], PrincipalArray>,
   'getVideoChunk' : ActorMethod<[bigint, bigint], Uint8Array | number[]>,
+  'makeAdmin' : ActorMethod<[string], boolean>,
   'name' : ActorMethod<[], string>,
   'parseControllersFromCanisterStatusErrorIfCallerNotController' : ActorMethod<
     [string],

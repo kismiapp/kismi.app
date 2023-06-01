@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
+import NewContest from "../../components/NewContest"
 import NewProposal from "../../components/NewProposal"
 import ProfileEdit from "../../components/ProfileEdit";
-import { useNavigate } from "react-router-dom"
 
 
-function User({setModal, setModalMsg, setFileLoader, pawCoin, profile, setIsLoading, isLoading, caller,reLoad }) {
-
-  const navigate = useNavigate()
-
-  useEffect(()=>{
-    if(profile && profile.admin){
-      navigate("/admin")
+function User({setModal, setModalMsg, setFileLoader, pawCoin, profile, setIsLoading, isLoading, caller, reLoad }) {
+    if(!profile.admin){
+        return null;
     }
-  },[profile])
   return (
     <div className="addCards">
+      {!isLoading && (<NewContest setModal={setModal} setModalMsg={setModalMsg} pawCoins={pawCoin} caller={caller} profile={profile} setIsLoading={setIsLoading} loading={isLoading} setFileLoader={setFileLoader} />)}
       {!isLoading && (<NewProposal setModal={setModal} setModalMsg={setModalMsg} pawCoins={pawCoin} caller={caller} profile={profile} setIsLoading={setIsLoading} loading={isLoading} setFileLoader={setFileLoader} />)}
       {!isLoading && (<ProfileEdit reLoad={reLoad} profile={profile} setIsLoading={setIsLoading}  setModalMsg={setModalMsg} setModal={setModal} />)}
     </div>

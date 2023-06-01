@@ -22,6 +22,7 @@ import {
   Route,
 } from "react-router-dom"
 import { useAuth } from "./auth"
+import Admin from "./Pages/Admin";
 
 function AppPage() {
   const [modal, setModal] = useState(false)
@@ -61,7 +62,8 @@ function AppPage() {
     const caller = await backendActor.caller()
     const profile = await backendActor.getProfile()
     const pawCoins = await backendActor.getPawCoins()
-    const addPawCoins = await backendActor.addPawCoins()
+    console.log("caller",caller)
+    console.log("profile",profile)
     setCaller(caller)
     setProfile(profile)
     setPawCoin(pawCoins)
@@ -110,6 +112,23 @@ function AppPage() {
                   pawCoin={pawCoin}
                   profile={profile}
                   isLoading={isLoading}
+                  reLoad={getIsReady}
+                />
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <Admin
+                  setModal={setModal}
+                  setModalMsg={setModalMsg}
+                  setFileLoader={setFileLoader}
+                  caller={caller}
+                  setIsLoading={setIsLoading}
+                  pawCoin={pawCoin}
+                  profile={profile}
+                  isLoading={isLoading}
+                  reLoad={getIsReady}
                 />
               }
             />

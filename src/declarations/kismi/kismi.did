@@ -71,13 +71,13 @@ type Proposal =
  };
 type Profile = 
  record {
+   admin: Admin;
    badget: bool;
    lastProposal: opt Time;
    name: text;
    profilePic: opt blob;
    proposalsCompleted: nat;
  };
-type PrincipalArray = vec principal;
 type Content = 
  variant {
    Image: blob;
@@ -92,6 +92,7 @@ type CommentResponse =
    "text": text;
    timestamp: int;
  };
+type Admin = bool;
 type Account = 
  record {
    owner: principal;
@@ -104,8 +105,6 @@ service : {
   addProposalChunk: (nat, blob) -> (Result);
   addProposalVideoChunk: (nat, vec nat8, nat) -> (Result_5);
   addVote: (nat) -> (Result);
-  airDrop: () -> (Result);
-  airDrop2: () -> (Result);
   balanceOf: (Account) -> (nat) query;
   bannProposal: (nat) -> (Result_4);
   caller: () -> (text) query;
@@ -119,8 +118,8 @@ service : {
   getProfile: () -> (Profile) query;
   getProposal: (nat) -> (Result_2) query;
   getProposalProfilePic: (nat) -> (opt ProposalProfile) query;
-  getStudents: () -> (PrincipalArray);
   getVideoChunk: (nat, nat) -> (vec nat8) query;
+  makeAdmin: (text) -> (bool);
   name: () -> (text) query;
   parseControllersFromCanisterStatusErrorIfCallerNotController: (text) ->
    (vec principal);

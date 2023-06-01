@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faIdBadge, faHandshake, faClock, faImage } from '@fortawesome/free-solid-svg-icons';
 import "./index.css";
 import { useAuth } from '../../auth';
+import { useNavigate } from "react-router-dom"
+
 
 const Wrapper = ({ children }) => {
   const [isVisible, setIsVisible] = useState(true);
@@ -21,6 +23,7 @@ const Wrapper = ({ children }) => {
 
 
 const ProfileForm = ({ currentProfile, onUpdate, onFileChange, setProfile }) => {
+
 
   const handleInputChange = (event) => {
     console.log("sup", event.target.value)
@@ -46,9 +49,11 @@ const ProfileForm = ({ currentProfile, onUpdate, onFileChange, setProfile }) => 
   );
 };
 
-const App = ({ setIsLoading, profile, setModalMsg, setModal }) => {
+const App = ({ setIsLoading, profile, setModalMsg, setModal,reLoad }) => {
   const { backendActor, isAuthenticated } = useAuth();
   const [currentProfile, setCurrentProfile] = useState(null);
+  const navigate = useNavigate()
+
 
   const defaultProfile = {
     name: "Your name Here",
@@ -108,8 +113,8 @@ const App = ({ setIsLoading, profile, setModalMsg, setModal }) => {
       // Update the profile in the state
       // setCurrentProfile(updatedProfile);
       setIsLoading(false)
-      window.location.reload()
       //  window.location.reload()
+       reLoad()
     } catch (error) {
       console.error("Failed to update profile:", error);
     }
