@@ -4,7 +4,7 @@ import ProfileEdit from "../../components/ProfileEdit";
 import { useNavigate } from "react-router-dom"
 
 
-function User({setModal, setModalMsg, setFileLoader, pawCoin, profile, setIsLoading, isLoading, caller,reLoad }) {
+function User({setModal, setModalMsg, setFileLoader, kisses, profile, setIsLoading, isLoading, caller,reLoad }) {
 
   const navigate = useNavigate()
 
@@ -15,7 +15,7 @@ function User({setModal, setModalMsg, setFileLoader, pawCoin, profile, setIsLoad
   },[profile])
   return (
     <div className="addCards">
-      {!isLoading && (<NewProposal setModal={setModal} setModalMsg={setModalMsg} pawCoins={pawCoin} caller={caller} profile={profile} setIsLoading={setIsLoading} loading={isLoading} setFileLoader={setFileLoader} />)}
+      {!isLoading && (<NewProposal setModal={setModal} setModalMsg={setModalMsg} kisses={kisses} caller={caller} profile={profile} setIsLoading={setIsLoading} loading={isLoading} setFileLoader={setFileLoader} />)}
       {!isLoading && (<ProfileEdit reLoad={reLoad} profile={profile} setIsLoading={setIsLoading}  setModalMsg={setModalMsg} setModal={setModal} />)}
     </div>
   )

@@ -53,7 +53,7 @@
     text-decoration: none;
     color: #000;
     background-color: #ececec;
-    box-shadow: 10px 10px #cfc9c9;
+    /*box-shadow: 10px 10px #cfc9c9;*/
   }
   
   .show-counter .countdown {
@@ -88,3 +88,4 @@
       font-size: 1.5rem;
     }
   }
+

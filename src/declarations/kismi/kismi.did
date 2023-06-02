@@ -4,49 +4,20 @@ type UpdateProfile =
    profilePic: blob;
  };
 type Time = int;
-type Subaccount = blob;
-type Result_6 = 
- variant {
-   err: text;
-   ok: CommentResponse;
- };
-type Result_5 = 
+type Result_2 = 
  variant {
    err: text;
    ok: nat;
  };
-type Result_4 = 
- variant {
-   err: text;
-   ok: text;
- };
-type Result_3 = 
- variant {
-   err: text;
-   ok: vec CommentResponse;
- };
-type Result_2 = 
- variant {
-   err: text;
-   ok: Proposal;
- };
 type Result_1 = 
- variant {
-   err: text;
-   ok: record {e8s: nat64;};
- };
-type Result = 
  variant {
    err: text;
    ok;
  };
-type ProposalResponse = 
- record {
-   completed: bool;
-   description: text;
-   id: nat;
-   votes: nat;
-   votesWallet: principal;
+type Result = 
+ variant {
+   err: text;
+   ok: Contestant;
  };
 type ProposalProfile = 
  record {
@@ -60,7 +31,24 @@ type ProposalCall =
    description: text;
    votes: nat;
  };
-type Proposal = 
+type Profile = 
+ record {
+   admin: Admin;
+   badget: bool;
+   lastProposal: opt Time;
+   name: text;
+   profilePic: opt blob;
+   proposalsCompleted: nat;
+ };
+type ContestantResponse = 
+ record {
+   completed: bool;
+   description: text;
+   id: nat;
+   votes: nat;
+   votesWallet: principal;
+ };
+type Contestant = 
  record {
    completed: bool;
    content: Content;
@@ -70,15 +58,6 @@ type Proposal =
    owner: principal;
    votes: nat;
    votesWallet: principal;
- };
-type Profile = 
- record {
-   admin: Admin;
-   badget: bool;
-   lastProposal: opt Time;
-   name: text;
-   profilePic: opt blob;
-   proposalsCompleted: nat;
  };
 type Contest = 
  record {
@@ -93,55 +72,23 @@ type Content =
    Text: text;
    Video: nat;
  };
-type CommentResponse = 
- record {
-   commenter: principal;
-   id: nat;
-   proposalId: nat;
-   "text": text;
-   timestamp: int;
- };
 type Admin = bool;
-type Account = 
- record {
-   owner: principal;
-   subaccount: opt Subaccount;
- };
 service : {
-  addNewComment: (text, nat) -> (Result_6);
-  addNewProposal: (ProposalCall) -> (Result_5);
-  addPawCoins: () -> () oneway;
-  addProposalChunk: (nat, blob) -> (Result);
-  addProposalVideoChunk: (nat, vec nat8, nat) -> (Result_5);
-  addVote: (nat) -> (Result);
-  balanceOf: (Account) -> (nat) query;
-  bannProposal: (nat) -> (Result_4);
+  addKisses: () -> () oneway;
+  addNewContestant: (ProposalCall) -> (Result_2);
+  addProposalChunk: (nat, blob) -> (Result_1);
+  addVote: (nat) -> (Result_1);
   caller: () -> (text) query;
   createContest: (Contest) -> (bool);
-  donateToProposal: (nat, nat) -> (Result);
-  getAllContestantsByVotes: () -> (vec ProposalResponse) query;
-  getAllProposals: () -> (vec ProposalResponse) query;
-  getAllStudentsPrincipalTest: () -> (vec principal);
-  getCommentProfile: (text) -> (Profile) query;
-  getComments: (nat) -> (Result_3) query;
+  getAllContestants: () -> (vec ContestantResponse) query;
+  getAllContestantsByVotes: () -> (vec ContestantResponse) query;
   getContent: (nat) -> (Content) query;
-  getPawCoins: () -> (nat) query;
+  getContestant: (nat) -> (Result) query;
+  getKisses: () -> (nat) query;
   getProfile: () -> (Profile) query;
-  getProposal: (nat) -> (Result_2) query;
   getProposalProfilePic: (nat) -> (opt ProposalProfile) query;
-  getVideoChunk: (nat, nat) -> (vec nat8) query;
   makeAdmin: (text, text) -> (text);
-  name: () -> (text) query;
-  parseControllersFromCanisterStatusErrorIfCallerNotController: (text) ->
-   (vec principal);
-  pawBalance: () -> (Result_1);
   session: () -> (Profile) query;
-  symbol: () -> (text) query;
   toNat8: (Content) -> (vec nat8);
-  totalSupply: () -> (nat) query;
-  transFer: (principal) -> (Result);
-  transFerDonation: (principal, principal, nat) -> (Result);
-  transfer: (Account, Account, nat) -> (Result);
   updateProfile: (UpdateProfile) -> (Profile);
-  verifyOwnership: (principal, principal) -> (bool);
 }

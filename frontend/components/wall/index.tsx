@@ -17,7 +17,7 @@ function LoadingContent({ isLoading, imgSrc }) {
   );
 }
 
-function ProposalCard({ proposal,getAllProposals }) {
+function ProposalCard({ proposal, getAllProposals }) {
   const { backendActor, isAuthenticated } = useAuth();
   const [imgSrc, setImgSrc] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
@@ -121,9 +121,9 @@ function ProposalCard({ proposal,getAllProposals }) {
   const handleKissButtonClick = async () => {
     setKissCount(prevCount => prevCount + 1);
     await backendActor.addVote(proposal.id);
-    setTimeout(()=>{
+    setTimeout(() => {
       getAllProposals()
-    },2000)
+    }, 2000)
   };
 
   /*
@@ -136,12 +136,27 @@ function ProposalCard({ proposal,getAllProposals }) {
   <button className="kissButton" onClick={async () => { await backendActor.addVote(proposal.id) }}>KISS</button>&nbsp;
               {`${Number(proposal.icp)}  `}<img src="https://iili.io/Hr5iCR2.png"></img>
   */
-  return (
-    <div className="ProposalCard">
+
+              /*
+    <div className="ContestantPicture">
       <div className="image-container">
         <h6>{proposal.description}</h6>
         {content && renderContent()}
-        <div className="card-footer">
+        <div className="footer">
+          <button className="kissButton" onClick={handleKissButtonClick}>KISS</button>&nbsp;
+          <div className="kissCount">
+            {`${kissCount}  `}<img src="https://iili.io/Hr5iCR2.png"></img>
+          </div>
+        </div>
+      </div>
+    </div>
+              */
+  return (
+    <div className="ContestantPicture">
+      <div className="image-container">
+        <h6>{proposal.description}</h6>
+        {content && renderContent()}
+        <div className="footer">
           <button className="kissButton" onClick={handleKissButtonClick}>KISS</button>&nbsp;
           <div className="kissCount">
             {`${kissCount}  `}<img src="https://iili.io/Hr5iCR2.png"></img>
@@ -157,9 +172,9 @@ const ProposalWall = () => {
   const [displayedProposals, setDisplayedProposals] = useState([]);
   const [sliderValue, setSliderValue] = useState(6);
 
-  useEffect(()=>{
+  useEffect(() => {
 
-  },[displayedProposals])
+  }, [displayedProposals])
 
   useEffect(() => {
     getAllProposals()

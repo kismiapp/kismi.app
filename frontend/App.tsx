@@ -39,7 +39,7 @@ function AppPage() {
   const [profile, setProfile] = useState(null)
   const [caller, setCaller] = useState(null)
   const [icpBalance, setBalance] = useState(null)
-  const [pawCoin, setPawCoin] = useState(0)
+  const [kisses, setKisses] = useState(0)
 
   //CountdownTimer
 
@@ -61,12 +61,12 @@ function AppPage() {
   const getIsReady = async () => {
     const caller = await backendActor.caller()
     const profile = await backendActor.getProfile()
-    const pawCoins = await backendActor.getPawCoins()
+    const pawCoins = await backendActor.getKisses()
     console.log("caller",caller)
     console.log("profile",profile)
     setCaller(caller)
     setProfile(profile)
-    setPawCoin(pawCoins)
+    setKisses(kisses)
   }
 
   useEffect(() => { }, [modal, fileloader])
@@ -91,7 +91,7 @@ function AppPage() {
           <TopBar
             setCaller={setCaller}
             icpBalance={icpBalance === null ? 0 : icpBalance}
-            pawCoins={pawCoin}
+            kisses={kisses}
             profile={profile}
             setProfile={setProfile}
             setIsLoading={setIsLoading}
@@ -109,7 +109,7 @@ function AppPage() {
                   setFileLoader={setFileLoader}
                   caller={caller}
                   setIsLoading={setIsLoading}
-                  pawCoin={pawCoin}
+                  kisses={kisses}
                   profile={profile}
                   isLoading={isLoading}
                   reLoad={getIsReady}
@@ -125,7 +125,7 @@ function AppPage() {
                   setFileLoader={setFileLoader}
                   caller={caller}
                   setIsLoading={setIsLoading}
-                  pawCoin={pawCoin}
+                  kisses={kisses}
                   profile={profile}
                   isLoading={isLoading}
                   reLoad={getIsReady}

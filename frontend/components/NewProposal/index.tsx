@@ -65,7 +65,7 @@ const NewProposalForm = ({ setIsLoading, loading, setModal, setModalMsg, setFile
       // This is the first chunk, so create a new proposal
       if (position === 0) {
         // This is the first chunk, so create a new proposal
-        const proposal = {
+        const contestant = {
           description,
           votes:0,
           content,
@@ -73,8 +73,8 @@ const NewProposalForm = ({ setIsLoading, loading, setModal, setModalMsg, setFile
         }
 
 
-        proposalId = await backendActor.addNewProposal(proposal);
-        console.log("proposal", Number(proposalId.ok))
+        proposalId = await backendActor.addNewContestant(contestant);
+        console.log("Constestant Picture", Number(proposalId.ok))
         if (proposalType === "Video") {
           console.log("Uploading video", chunkIndex, [...uint8Array])
           await backendActor.addProposalVideoChunk(Number(proposalId.ok), [...uint8Array], chunkIndex);

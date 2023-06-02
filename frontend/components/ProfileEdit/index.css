@@ -34,11 +34,11 @@ input[type="file"] {
 }
 
 button {
-    margin-top: 20px;
+    /*margin-top: 20px;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background: linear-gradient(135deg, #FFD3A5, #FD6585);
+    background: linear-gradient(135deg, #FFD3A5, #FD6585);*/
     color: white;
     cursor: pointer;
     transition: background 0.3s ease;

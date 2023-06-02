@@ -1,28 +1,23 @@
-/* Profile.css */
-
-.ProfileCard {
+.TopBar {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  padding: 10px;
-  /*border-radius: 10px;*/
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  /*box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);*/
+  justify-content: space-around;
+  /* padding: 10px; */
+  background: linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);
   margin-bottom: 5px;
   width: 100vw;
-  height: 80px;
-  margin-left: 0;
-  /*margin: auto;*/
-  color: #424242;
+  height: 65px;
+  /* margin-left: 0; */
+  /* color: #424242; */
 }
 
-.ProfileCard h1 {
+.TopBar h1 {
   font-size: 1.5em;
   margin-bottom: 10px;
 }
 
-.ProfileCard h2 {
+.TopBar h2 {
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
@@ -37,7 +32,7 @@
   margin-left: 15px;
 }
 
-.ProfileCard h3 {
+.TopBar h3 {
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;
@@ -51,19 +46,19 @@
   margin-left: 5px;
 }
 
-.ProfileCard p {
+.TopBar p {
   font-size: 1em;
   color: #424242;
 }
 
-.ProfileCard img.kismi-logo {
+.TopBar img.kismi-logo {
   margin-left: 60px;
   align-self: flex-start;
 }
 
 
 
-.ProfileCard .fa-icon {
+.TopBar .fa-icon {
   font-size: 2em;
   margin: 0 10px;
 }
@@ -81,7 +76,7 @@ img.profile-pic {
   display: inline-block;
 }
 
-.profile-menu{
+.profile-menu {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -94,7 +89,7 @@ img.profile-pic {
 }
 
 
-.ProfileCard .info-row {
+.TopBar .info-row {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,7 +97,7 @@ img.profile-pic {
   margin-bottom: 5px;
 }
 
-.ProfileCard .badge {
+.TopBar .badge {
   display: inline-block;
   font-size: 0.6em;
   margin-left: 10px;
@@ -152,7 +147,7 @@ img.profile-pic {
   }
 }
 
-.ProfileCard button {
+.TopBar button {
   margin-top: 10px;
   padding: 10px 20px;
   border: none;

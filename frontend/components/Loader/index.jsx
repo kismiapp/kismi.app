@@ -1,6 +1,5 @@
 import React from "react"
 
-
 export const Loader = ({ message = "Loading..." }) => {
     return (
       <div className="loader-container">
@@ -12,6 +11,5 @@ export const Loader = ({ message = "Loading..." }) => {
       </div>
     )
   }
-
 
   export default Loader;

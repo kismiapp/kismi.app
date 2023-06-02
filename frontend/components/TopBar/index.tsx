@@ -5,7 +5,7 @@ import { useAuth } from "../../auth";
 import { useNavigate } from "react-router-dom"
 import ProfileEdit from '../../components/ProfileEdit';
 
-function TopBar({  setIsLoading, loading, profile, setProfile, icpBalance, pawCoins, setCaller }) {
+function TopBar({  setIsLoading, loading, profile, setProfile, icpBalance, kisses, setCaller }) {
   const [ImgSrc, setImgSrc] = useState(null);
   const navigate = useNavigate()
 
@@ -36,7 +36,7 @@ function TopBar({  setIsLoading, loading, profile, setProfile, icpBalance, pawCo
 
   let placeHolderImg = "https://cdn.midjourney.com/de16692f-bda7-418d-8138-36c1a9632c40/0_2.png";
   return (
-    <div className="ProfileCard">
+    <div className="TopBar">
       <div className="kismi-logo"><img src="https://iili.io/Hr7kS5X.png" width="150px" height="50px" alt="Kissmi-logo" /></div>
       <h2 onClick={()=>{navigate("/")}}>HOME</h2>
       <h2>NOTIFICATION</h2>
@@ -44,7 +44,7 @@ function TopBar({  setIsLoading, loading, profile, setProfile, icpBalance, pawCo
       <h2>KISSBOX</h2>
       {isAuthenticated &&
         <React.Fragment>
-          <h3>{pawCoins + " Kisses"}</h3>
+          <h3>{kisses + " Kisses"}</h3>
           <div className="profile-link">
             <img className="profile-pic" src={ImgSrc ? ImgSrc : placeHolderImg} alt="Profile" onClick={handleImageClick} />
             {isMenuOpen && (

@@ -10,6 +10,8 @@ function Home({ isLoading }) {
 
   return (
     <>
+    <div className="title">COMPETITION ROUND 001</div>
+    <div className="title2">Current Round Timer</div>
       <CountDownTimer targetDate={targetDate} />
       <ProposalWall />
     </>

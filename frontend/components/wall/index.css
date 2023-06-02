@@ -1,12 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
 .ProposalWall {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   position: relative;
   height: 100vh;
-  min-width: 500px;
+  min-width: 200px;
   overflow-x: hidden;
   overflow-y: auto;
   transform-style: preserve-3d;
@@ -33,7 +31,7 @@
 
 /* ProposalCard.css */
 
-.ProposalCard {
+.ContestantPicture {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,19 +45,19 @@
   /*max-width: 244px;*/
   /* increased max-width */
   min-width: 100px;
-  margin: 20px;
+  /*margin: 20px;*/
   /*max-height: 300px;*/
   min-height: 100px;
   color: #424242;
 }
 
-.ProposalCard .card-header {
+.ContestantPicture .card-header {
   width: 100%;
   display: flex;
   align-items: center;
 }
 
-.ProposalCard img.profile-pic {
+.ContestantPicture img.profile-pic {
   width: 70px;
   height: 70px;
   border-radius: 50%;
@@ -67,12 +65,12 @@
   margin-right: 10px;
 }
 
-.ProposalCard h2 {
+.ContestantPicture h2 {
   font-size: 1.5em;
   margin-bottom: 10px;
 }
 
-.ProposalCard p {
+.ContestantPicture p {
   font-size: 1em;
   color: #424242;
   /*height: 400px;
@@ -89,13 +87,13 @@
 }
 */
 
-.ProposalCard .comments-section {
+.ContestantPicture .comments-section {
   /* Define your comments section style here */
   margin-top: 2px;
 }
 
-.ProposalCard img.content,
-.ProposalCard video.content {
+.ContestantPicture img.content,
+.ContestantPicture video.content {
   max-width: 244px;
   /* for content image and video */
   min-height: 360;
@@ -107,18 +105,18 @@
 @media screen and (max-width: 768px) {
 
   /* Adjustments for screens up to 768px */
-  .ProposalCard {
+  .ContestantPicture {
     padding: 10px;
     margin-bottom: 30px;
     max-width: 500px;
   }
 
-  .ProposalCard img.profile-pic {
+  .ContestantPicture img.profile-pic {
     width: 50px;
     height: 50px;
   }
 
-  .ProposalCard p {
+  .ContestantPicture p {
     height: auto;
     width: 100%;
   }
@@ -127,12 +125,12 @@
     min-width: 00px;
   }
 
-  .ProposalCard .card-footer {
+  .ContestantPicture .footer {
     height: 80px;
   }
 
-  .ProposalCard img.content,
-  .ProposalCard video.content {
+  .ContestantPicture img.content,
+  .ContestantPicture video.content {
     max-width: 100%;
     /*min-height: 200px;*/
   }
@@ -141,7 +139,7 @@
 @media screen and (max-width: 480px) {
 
   /* Adjustments for screens up to 480px */
-  .ProposalCard {
+  .ContestantPicture {
     padding: 5px;
     margin-bottom: 20px;
     max-width: 300px;
@@ -151,22 +149,22 @@
     min-width: 00px;
   }
 
-  .ProposalCard img.profile-pic {
+  .ContestantPicture img.profile-pic {
     width: 40px;
     height: 40px;
   }
 
-  .ProposalCard p {
+  .ContestantPicture p {
     height: auto;
     width: 100%;
   }
 
-  .ProposalCard .card-footer {
+  .ContestantPicture .footer {
     height: 60px;
   }
 
-  .ProposalCard img.content,
-  .ProposalCard video.content {
+  .ContestantPicture img.content,
+  .ContestantPicture video.content {
     max-width: 100%;
     min-height: 150px;
   }
@@ -291,7 +289,7 @@
   margin: 5px 0 0 5px;
 }
 
-.ProposalCard .card-footer {
+.ContestantPicture .footer {
   position: absolute;
   display: flex;
   /* flex-direction: row; */
@@ -307,7 +305,7 @@
   /* align-items: start;*/
 }
 
-.kissButton {
+.footer .kissButton {
   width: 89px;
   height: 30px;
   font-family: 'Poppins';
@@ -322,7 +320,7 @@
   padding-top: 5px;
 }
 
-.kissCount {
+.footer .kissCount {
   width: 89px;
   height: 30px;
   font-family: 'Poppins';
@@ -335,118 +333,12 @@
   border: 1px solid #E60023;
   border-radius: 50px;
   text-align: center;
-  background-color: transparent;
+  background-color:rgba(255,255,255,0.3);
   padding-top: 5px;
 }
 
-.kissCount img {
+.footer .kissCount img {
   width: 28px;
   height: 16px;
 }
 
-.countdownTimer h1 {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 50px;
-  line-height: 99.5%;
-  /* identical to box height, or 50px */
-  text-align: center;
-  color: #FFFFFF;
-}
-
-.countdownTimer h2 {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 30px;
-  line-height: 99.5%;
-  /* identical to box height, or 30px */
-  text-align: center;
-  color: #FFFFFF;
-}
-
-.countdownTimer h3 {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 50px;
-  line-height: 99.5%;
-  /* identical to box height, or 50px */
-
-  text-align: center;
-
-  color: #FFFFFF;
-}
-
-.countdownTimer h4 {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 99.5%;
-  /* identical to box height, or 20px */
-
-  text-align: center;
-
-  color: #FFFFFF;
-}
-
-.expired-notice {
-  text-align: center;
-  padding: 2rem;
-  border: 1px solid #ebebeb;
-  border-radius: 0.25rem;
-  margin: 0.5rem;
-}
-
-.expired-notice>span {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: red;
-}
-
-.expired-notice>p {
-  font-size: 1.5rem;
-}
-
-.show-counter {
-  padding: 0.5rem;
-}
-
-.show-counter .countdown-link {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  font-weight: 700;
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-  padding: 0.5rem;
-  border: 1px solid #ebebeb;
-  border-radius: 0.25rem;
-  text-decoration: none;
-  color: #000;
-}
-
-.show-counter .countdown {
-  line-height: 1.25rem;
-  padding: 0 0.75rem 0 0.75rem;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-}
-
-.show-counter .countdown.danger {
-  color: #ff0000;
-}
-
-.show-counter .countdown>p {
-  margin: 0;
-}
-
-.show-counter .countdown>span {
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  line-height: 1rem;
-}
