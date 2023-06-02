@@ -19,6 +19,7 @@ import Error "mo:base/Error";
 import ManagementCanister "ica";
 import Iter "mo:base/Iter";
 import Bool "mo:base/Bool";
+import Order "mo:base/Order";
 
 actor kissmi {
     type ManagementCanister = ManagementCanister.ManagementCanister;
@@ -78,10 +79,10 @@ public type CommentResponse = {
 
     public type Proposal = {
         id:Nat;
-        icp:Nat;
+        votes:Nat;
         description:Text;
         content:Content;
-        icpWallet:Principal;
+        votesWallet:Principal;
         completed:Bool;
         owner:Principal;
         contest:Nat;
@@ -90,14 +91,14 @@ public type CommentResponse = {
 
     public type ProposalResponse = {
        id:Nat;
-        icp:Nat;
+        votes:Nat;
         description:Text;
-        icpWallet:Principal;
+        votesWallet:Principal;
         completed:Bool;
     };
 
     public type ProposalCall = {
-          icp:Nat;
+          votes:Nat;
           description:Text;
           content:Content;
           contest:Nat;
@@ -353,8 +354,8 @@ public type CommentResponse = {
                     completed=found.completed;
                     content=#Video(chunkId+1);
                     description=found.description;
-                    icpWallet=found.icpWallet;
-                    icp=found.icp;
+                    votesWallet=found.votesWallet;
+                    votes=found.votes;
                     owner=msg.caller;
                     contest=found.contest;
                 };
@@ -426,11 +427,11 @@ public type CommentResponse = {
                   let finalBlob:Content = #Image(Blob.fromArray(finalConentAsNat));
                     let proposalToUpdateWithChunks:Proposal = {
                         id=found.id;
-                        icp=found.icp;
+                        votes=found.votes;
                         description=found.description;
                         content=finalBlob;
                         completed=found.completed;
-                        icpWallet=found.icpWallet;
+                        votesWallet=found.votesWallet;
                         owner=msg.caller;
                         contest=found.contest;
                     };
@@ -495,7 +496,7 @@ public func toNat8(x : Content) : async [Nat8] {
       switch(proposals.get(Nat.toText(proposalId))){
           case null {#err "" };
           case (?found){
-                  let result = await transFerDonation(msg.caller,found.icpWallet,amount);
+                  let result = await transFerDonation(msg.caller,found.votesWallet,amount);
                   if(Result.isOk(result)){
                      let badgeResult = setDonatorBadged(msg.caller);
                     return #ok();
@@ -529,10 +530,10 @@ public func toNat8(x : Content) : async [Nat8] {
       case (?found) {
         let newProposal:Proposal ={
           id=proposalId;
-          icp=found.icp+1;
+          votes=found.votes+1;
           description=found.description;
           content=found.content;
-          icpWallet=msg.caller;
+          votesWallet=msg.caller;
           completed=false;
           owner=msg.caller;
           contest=found.contest;
@@ -560,10 +561,10 @@ public func toNat8(x : Content) : async [Nat8] {
       let newid = proposals.size();
     let newProposal:Proposal ={
         id=newid;
-        icp=proposal.icp;
+        votes=proposal.votes;
         description=proposal.description;
         content=proposal.content;
-        icpWallet=msg.caller;
+        votesWallet=msg.caller;
         completed=false;
         owner=msg.caller;
         contest=1;
@@ -591,9 +592,9 @@ public func toNat8(x : Content) : async [Nat8] {
       for(value in proposals.vals()){
         let proposalToResponse:ProposalResponse = {
           id=value.id;
-          icp=value.icp;
+          votes=value.votes;
           description=value.description;
-          icpWallet=value.icpWallet;
+          votesWallet=value.votesWallet;
           completed=value.completed;
         };
         proposalBuffer.add(proposalToResponse);
@@ -806,6 +807,36 @@ public shared query func getComments(proposalId: Nat): async Result.Result<[Comm
         };
     };
 };
+
+
+
+
+    private func compareVotes(m1 : ProposalResponse, m2 :ProposalResponse) : Order.Order {
+    switch(Int.compare(m1.votes, m2.votes)) {
+        case (#greater) return #less;
+        case (#less) return #greater;
+        case(_) return #equal;
+    }
+};
+
+
+
+     public shared query func getAllContestantsByVotes():async [ProposalResponse]{
+      let proposalBuffer:Buffer.Buffer<ProposalResponse> = Buffer.Buffer<ProposalResponse>(0);
+      for(value in proposals.vals()){
+        let proposalToResponse:ProposalResponse = {
+          id=value.id;
+          votes=value.votes;
+          description=value.description;
+          votesWallet=value.votesWallet;
+          completed=value.completed;
+        };
+        proposalBuffer.add(proposalToResponse);
+      };
+        proposalBuffer.sort(compareVotes);
+      return Buffer.toArray(proposalBuffer);
+    };
+
 
 
 

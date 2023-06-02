@@ -16,6 +16,12 @@ export interface CommentResponse {
 export type Content = { 'Text' : string } |
   { 'Image' : Uint8Array | number[] } |
   { 'Video' : bigint };
+export interface Contest {
+  'id' : bigint,
+  'end' : Time,
+  'active' : boolean,
+  'name' : string,
+}
 export interface Profile {
   'lastProposal' : [] | [Time],
   'admin' : Admin,
@@ -26,16 +32,18 @@ export interface Profile {
 }
 export interface Proposal {
   'id' : bigint,
-  'icp' : bigint,
   'content' : Content,
+  'contest' : bigint,
   'owner' : Principal,
+  'votes' : bigint,
   'completed' : boolean,
   'description' : string,
-  'icpWallet' : Principal,
+  'votesWallet' : Principal,
 }
 export interface ProposalCall {
-  'icp' : bigint,
   'content' : Content,
+  'contest' : bigint,
+  'votes' : bigint,
   'description' : string,
 }
 export interface ProposalProfile {
@@ -44,10 +52,10 @@ export interface ProposalProfile {
 }
 export interface ProposalResponse {
   'id' : bigint,
-  'icp' : bigint,
+  'votes' : bigint,
   'completed' : boolean,
   'description' : string,
-  'icpWallet' : Principal,
+  'votesWallet' : Principal,
 }
 export type Result = { 'ok' : null } |
   { 'err' : string };
@@ -82,7 +90,9 @@ export interface _SERVICE {
   'balanceOf' : ActorMethod<[Account], bigint>,
   'bannProposal' : ActorMethod<[bigint], Result_4>,
   'caller' : ActorMethod<[], string>,
+  'createContest' : ActorMethod<[Contest], boolean>,
   'donateToProposal' : ActorMethod<[bigint, bigint], Result>,
+  'getAllContestantsByVotes' : ActorMethod<[], Array<ProposalResponse>>,
   'getAllProposals' : ActorMethod<[], Array<ProposalResponse>>,
   'getAllStudentsPrincipalTest' : ActorMethod<[], Array<Principal>>,
   'getCommentProfile' : ActorMethod<[string], Profile>,
@@ -93,7 +103,7 @@ export interface _SERVICE {
   'getProposal' : ActorMethod<[bigint], Result_2>,
   'getProposalProfilePic' : ActorMethod<[bigint], [] | [ProposalProfile]>,
   'getVideoChunk' : ActorMethod<[bigint, bigint], Uint8Array | number[]>,
-  'makeAdmin' : ActorMethod<[string], boolean>,
+  'makeAdmin' : ActorMethod<[string, string], string>,
   'name' : ActorMethod<[], string>,
   'parseControllersFromCanisterStatusErrorIfCallerNotController' : ActorMethod<
     [string],

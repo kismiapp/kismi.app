@@ -13,8 +13,9 @@ export const idlFactory = ({ IDL }) => {
     'Video' : IDL.Nat,
   });
   const ProposalCall = IDL.Record({
-    'icp' : IDL.Nat,
     'content' : Content,
+    'contest' : IDL.Nat,
+    'votes' : IDL.Nat,
     'description' : IDL.Text,
   });
   const Result_5 = IDL.Variant({ 'ok' : IDL.Nat, 'err' : IDL.Text });
@@ -25,14 +26,20 @@ export const idlFactory = ({ IDL }) => {
     'subaccount' : IDL.Opt(Subaccount),
   });
   const Result_4 = IDL.Variant({ 'ok' : IDL.Text, 'err' : IDL.Text });
+  const Time = IDL.Int;
+  const Contest = IDL.Record({
+    'id' : IDL.Nat,
+    'end' : Time,
+    'active' : IDL.Bool,
+    'name' : IDL.Text,
+  });
   const ProposalResponse = IDL.Record({
     'id' : IDL.Nat,
-    'icp' : IDL.Nat,
+    'votes' : IDL.Nat,
     'completed' : IDL.Bool,
     'description' : IDL.Text,
-    'icpWallet' : IDL.Principal,
+    'votesWallet' : IDL.Principal,
   });
-  const Time = IDL.Int;
   const Admin = IDL.Bool;
   const Profile = IDL.Record({
     'lastProposal' : IDL.Opt(Time),
@@ -48,12 +55,13 @@ export const idlFactory = ({ IDL }) => {
   });
   const Proposal = IDL.Record({
     'id' : IDL.Nat,
-    'icp' : IDL.Nat,
     'content' : Content,
+    'contest' : IDL.Nat,
     'owner' : IDL.Principal,
+    'votes' : IDL.Nat,
     'completed' : IDL.Bool,
     'description' : IDL.Text,
-    'icpWallet' : IDL.Principal,
+    'votesWallet' : IDL.Principal,
   });
   const Result_2 = IDL.Variant({ 'ok' : Proposal, 'err' : IDL.Text });
   const ProposalProfile = IDL.Record({
@@ -82,7 +90,13 @@ export const idlFactory = ({ IDL }) => {
     'balanceOf' : IDL.Func([Account], [IDL.Nat], ['query']),
     'bannProposal' : IDL.Func([IDL.Nat], [Result_4], []),
     'caller' : IDL.Func([], [IDL.Text], ['query']),
+    'createContest' : IDL.Func([Contest], [IDL.Bool], []),
     'donateToProposal' : IDL.Func([IDL.Nat, IDL.Nat], [Result], []),
+    'getAllContestantsByVotes' : IDL.Func(
+        [],
+        [IDL.Vec(ProposalResponse)],
+        ['query'],
+      ),
     'getAllProposals' : IDL.Func([], [IDL.Vec(ProposalResponse)], ['query']),
     'getAllStudentsPrincipalTest' : IDL.Func([], [IDL.Vec(IDL.Principal)], []),
     'getCommentProfile' : IDL.Func([IDL.Text], [Profile], ['query']),
@@ -101,7 +115,7 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Vec(IDL.Nat8)],
         ['query'],
       ),
-    'makeAdmin' : IDL.Func([IDL.Text], [IDL.Bool], []),
+    'makeAdmin' : IDL.Func([IDL.Text, IDL.Text], [IDL.Text], []),
     'name' : IDL.Func([], [IDL.Text], ['query']),
     'parseControllersFromCanisterStatusErrorIfCallerNotController' : IDL.Func(
         [IDL.Text],

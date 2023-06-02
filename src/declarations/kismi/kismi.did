@@ -44,9 +44,9 @@ type ProposalResponse =
  record {
    completed: bool;
    description: text;
-   icp: nat;
-   icpWallet: principal;
    id: nat;
+   votes: nat;
+   votesWallet: principal;
  };
 type ProposalProfile = 
  record {
@@ -56,18 +56,20 @@ type ProposalProfile =
 type ProposalCall = 
  record {
    content: Content;
+   contest: nat;
    description: text;
-   icp: nat;
+   votes: nat;
  };
 type Proposal = 
  record {
    completed: bool;
    content: Content;
+   contest: nat;
    description: text;
-   icp: nat;
-   icpWallet: principal;
    id: nat;
    owner: principal;
+   votes: nat;
+   votesWallet: principal;
  };
 type Profile = 
  record {
@@ -77,6 +79,13 @@ type Profile =
    name: text;
    profilePic: opt blob;
    proposalsCompleted: nat;
+ };
+type Contest = 
+ record {
+   active: bool;
+   end: Time;
+   id: nat;
+   name: text;
  };
 type Content = 
  variant {
@@ -108,7 +117,9 @@ service : {
   balanceOf: (Account) -> (nat) query;
   bannProposal: (nat) -> (Result_4);
   caller: () -> (text) query;
+  createContest: (Contest) -> (bool);
   donateToProposal: (nat, nat) -> (Result);
+  getAllContestantsByVotes: () -> (vec ProposalResponse) query;
   getAllProposals: () -> (vec ProposalResponse) query;
   getAllStudentsPrincipalTest: () -> (vec principal);
   getCommentProfile: (text) -> (Profile) query;
@@ -119,7 +130,7 @@ service : {
   getProposal: (nat) -> (Result_2) query;
   getProposalProfilePic: (nat) -> (opt ProposalProfile) query;
   getVideoChunk: (nat, nat) -> (vec nat8) query;
-  makeAdmin: (text) -> (bool);
+  makeAdmin: (text, text) -> (text);
   name: () -> (text) query;
   parseControllersFromCanisterStatusErrorIfCallerNotController: (text) ->
    (vec principal);

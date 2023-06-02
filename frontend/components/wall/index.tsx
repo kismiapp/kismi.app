@@ -164,8 +164,8 @@ const ProposalWall = () => {
 
   const getAllProposals = async () => {
     if (backendActor) {
-      let caller = await backendActor.getAllProposals();
-      setDisplayedProposals(caller)
+      let contestants = await backendActor.getAllContestantsByVotes()
+      setDisplayedProposals(contestants)
     }
   }
 
