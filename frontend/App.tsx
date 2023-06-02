@@ -98,7 +98,7 @@ function AppPage() {
             loading={isLoading}
           />
           <Routes>
-            <Route path="" element={<Home isLoading={isLoading} />} />
+            <Route path="" element={<Home isLoading={isLoading}  />} />
             <Route path="/proposal/:id" element={<Proposal />} />
             <Route
               path="/user"

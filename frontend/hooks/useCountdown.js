@@ -13,17 +13,21 @@ const useCountDown = (targetDate) => {
     return () => clearInterval(interval);
   }, [countDownDate]);
 
-  return getReturnValues(countDown);
+  return getReturnValues(countDown,targetDate);
 };
 
-const getReturnValues = (countDown) => {
-  // calculate time left
-  const days = Math.floor(countDown / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((countDown % (1000 * 60)) / 1000);
+const getReturnValues = (countDown,targetDate) => {
+  // calculate time left\
 
-  return [days, hours, minutes, seconds];
+  if(targetDate){
+    const days = Math.floor(countDown / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((countDown % (1000 * 60)) / 1000);
+
+    return [days, hours, minutes, seconds];
+  }
+  return [null, null, null, null];
 };
 
 export default useCountDown;

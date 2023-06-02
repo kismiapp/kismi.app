@@ -21,9 +21,9 @@ const defaultOptions = {
       process.env.DFX_NETWORK === "ic"
         ?
 
+        `http://localhost:8000?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai#authorize`:
+        "https://identity.ic0.app/#authorize",
 
-        "https://identity.ic0.app/#authorize":
-        `http://localhost:8000?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai#authorize`,
   },
 };
 

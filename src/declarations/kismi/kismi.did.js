@@ -13,12 +13,7 @@ export const idlFactory = ({ IDL }) => {
   const Result_2 = IDL.Variant({ 'ok' : IDL.Nat, 'err' : IDL.Text });
   const Result_1 = IDL.Variant({ 'ok' : IDL.Null, 'err' : IDL.Text });
   const Time = IDL.Int;
-  const Contest = IDL.Record({
-    'id' : IDL.Nat,
-    'end' : Time,
-    'active' : IDL.Bool,
-    'name' : IDL.Text,
-  });
+  const ContestCall = IDL.Record({ 'end' : Time, 'name' : IDL.Text });
   const ContestantResponse = IDL.Record({
     'id' : IDL.Nat,
     'votes' : IDL.Nat,
@@ -60,7 +55,8 @@ export const idlFactory = ({ IDL }) => {
     'addProposalChunk' : IDL.Func([IDL.Nat, IDL.Vec(IDL.Nat8)], [Result_1], []),
     'addVote' : IDL.Func([IDL.Nat], [Result_1], []),
     'caller' : IDL.Func([], [IDL.Text], ['query']),
-    'createContest' : IDL.Func([Contest], [IDL.Bool], []),
+    'createContest' : IDL.Func([ContestCall], [IDL.Bool], []),
+    'getActiveContest' : IDL.Func([], [Time], []),
     'getAllContestants' : IDL.Func(
         [],
         [IDL.Vec(ContestantResponse)],

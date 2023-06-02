@@ -29,6 +29,10 @@ const ShowCounter = ({ days, hours, minutes, seconds }) => {
 };
 
 const CountDownTimer = ({ targetDate }) => {
+    if(!targetDate){
+        return null;
+    }
+
     const [days, hours, minutes, seconds] = useCountDown(targetDate);
 
     if (days + hours + minutes + seconds <= 0) {

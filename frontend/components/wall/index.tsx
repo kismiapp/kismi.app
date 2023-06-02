@@ -17,7 +17,7 @@ function LoadingContent({ isLoading, imgSrc }) {
   );
 }
 
-function ProposalCard({ proposal, getAllProposals }) {
+function ProposalCard({ proposal, getAllProposals,voteLock }) {
   const { backendActor, isAuthenticated } = useAuth();
   const [imgSrc, setImgSrc] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
@@ -157,7 +157,7 @@ function ProposalCard({ proposal, getAllProposals }) {
         <h6>{proposal.description}</h6>
         {content && renderContent()}
         <div className="footer">
-          <button className="kissButton" onClick={handleKissButtonClick}>KISS</button>&nbsp;
+          <button className="kissButton" disabled={voteLock} onClick={handleKissButtonClick}>KISS</button>&nbsp;
           <div className="kissCount">
             {`${kissCount}  `}<img src="https://iili.io/Hr5iCR2.png"></img>
           </div>
@@ -167,7 +167,7 @@ function ProposalCard({ proposal, getAllProposals }) {
   );
 }
 
-const ProposalWall = () => {
+const ProposalWall = ({voteLock}) => {
   const { backendActor, isAuthenticated } = useAuth();
   const [displayedProposals, setDisplayedProposals] = useState([]);
   const [sliderValue, setSliderValue] = useState(6);
@@ -211,7 +211,7 @@ const ProposalWall = () => {
 
       <div className="ProposalWall" onScroll={handleScroll} style={{ width: `${sliderValue * 250}px` }}>
         {displayedProposals && displayedProposals.map(proposal => (
-          <ProposalCard key={Number(proposal.id)} proposal={proposal} getAllProposals={getAllProposals} />
+          <ProposalCard key={Number(proposal.id)} proposal={proposal} getAllProposals={getAllProposals} voteLock={voteLock} />
         ))}
       </div>
     </>

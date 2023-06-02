@@ -5,12 +5,7 @@ export type Admin = boolean;
 export type Content = { 'Text' : string } |
   { 'Image' : Uint8Array | number[] } |
   { 'Video' : bigint };
-export interface Contest {
-  'id' : bigint,
-  'end' : Time,
-  'active' : boolean,
-  'name' : string,
-}
+export interface ContestCall { 'end' : Time, 'name' : string }
 export interface Contestant {
   'id' : bigint,
   'content' : Content,
@@ -63,7 +58,8 @@ export interface _SERVICE {
   'addProposalChunk' : ActorMethod<[bigint, Uint8Array | number[]], Result_1>,
   'addVote' : ActorMethod<[bigint], Result_1>,
   'caller' : ActorMethod<[], string>,
-  'createContest' : ActorMethod<[Contest], boolean>,
+  'createContest' : ActorMethod<[ContestCall], boolean>,
+  'getActiveContest' : ActorMethod<[], Time>,
   'getAllContestants' : ActorMethod<[], Array<ContestantResponse>>,
   'getAllContestantsByVotes' : ActorMethod<[], Array<ContestantResponse>>,
   'getContent' : ActorMethod<[bigint], Content>,

@@ -110,6 +110,11 @@ actor kissmi {
     profilePic : Blob
   };
 
+   public type ContestCall = {
+    name : Text;
+    end : Time;
+  };
+
   public type Contest = {
     name : Text;
     end : Time;
@@ -530,8 +535,6 @@ actor kissmi {
       owner = msg.caller;
       subaccount = ?defaultSub
     };
-    let balance = getBalance(account);
-    if (balance >= 0) {
       let newid = contestants.size();
       let newContestant : Contestant = {
         id = newid;
@@ -545,10 +548,8 @@ actor kissmi {
       };
       switch (contestants.put(Nat.toText(newid), newContestant)) {
         case (added) {
-          //ledger.put(account, balance +100);
           return #ok(newid)
         }
-      }
     };
     return #err("Couldn't add the contestant")
   };
@@ -802,22 +803,44 @@ actor kissmi {
     return Buffer.toArray(ContestantBuffer)
   };
 
-  public shared (msg) func createContest(contest : Contest) : async Bool {
+
+  public shared(msg) func getActiveContest(): async Time {
+      switch(contestLedger.get(Nat.toText(0))){
+        case null {return 00000};
+        case(?found){
+            return found.end;
+        }
+      }
+  };
+
+
+
+  public shared (msg) func createContest(contest : ContestCall) : async Bool {
     let account : Account = {
       owner = msg.caller;
       subaccount = null
+    };
+    let newid = contestLedger.size();
+    let newContest:Contest = {
+        active=true;
+        end=contest.end;
+        id=newid;
+        name=contest.name;
     };
     switch (profiles.get(account)) {
       case null { return false };
       case (?found) {
         if (found.admin == true) {
-          let newid = contestLedger.size();
-          contestLedger.put(Nat.toText(newid), contest);
+          contestLedger.put(Nat.toText(newid), newContest);
           return true
         };
         return false
       }
     }
   };
+
+
+
+
 
 }
