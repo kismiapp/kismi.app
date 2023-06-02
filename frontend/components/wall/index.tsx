@@ -120,7 +120,7 @@ function ProposalCard({ proposal }) {
     console.log("getting content ", caller);
   }
 
-  const [kissCount, setKissCount] = useState(Number(proposal.icp));
+  const [kissCount, setKissCount] = useState(Number(proposal.votes));
   const handleKissButtonClick = async () => {
     backendActor.addVote(proposal.id);
     setKissCount(prevCount => prevCount + 1);

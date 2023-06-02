@@ -7,7 +7,6 @@ const NewProposalForm = ({ setIsLoading, loading, setModal, setModalMsg, setFile
 
   const [proposalType, setProposalType] = useState("Image");
   const [description, setDescription] = useState("");
-  const [icp, setIcp] = useState(0);
   const [content, setContent] = useState("");
 
   useEffect(() => {
@@ -68,8 +67,9 @@ const NewProposalForm = ({ setIsLoading, loading, setModal, setModalMsg, setFile
         // This is the first chunk, so create a new proposal
         const proposal = {
           description,
-          icp,
-          content
+          votes:0,
+          content,
+          contest:1
         }
 
 
