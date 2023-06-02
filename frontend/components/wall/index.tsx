@@ -153,7 +153,6 @@ function ProposalCard({ proposal }) {
 }
 
 const ProposalWall = () => {
-  //const { backendActor, isAuthenticated } = useAuth();
   const { backendActor, isAuthenticated } = useAuth();
   const [displayedProposals, setDisplayedProposals] = useState([]);
   const [sliderValue, setSliderValue] = useState(6);
