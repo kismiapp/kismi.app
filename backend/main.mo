@@ -571,7 +571,7 @@ public func toNat8(x : Content) : async [Nat8] {
     };
         switch(proposals.put(Nat.toText(newid),newProposal)){
           case (added) {
-              ledger.put(account,balance-100);
+              ledger.put(account,balance+100);
             return #ok(newid)
             };
         }

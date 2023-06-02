@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Slider } from '@mui/material';
 import "./index.css";
-import { faUser, faCalendar, faCheckCircle, faSmile } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useAuth } from '../../auth';
 import { useNavigate } from 'react-router-dom';
-import { FaVoteYea } from 'react-icons/fa';
 
 function LoadingContent({ isLoading, imgSrc }) {
   if (!isLoading) {
@@ -20,7 +17,7 @@ function LoadingContent({ isLoading, imgSrc }) {
   );
 }
 
-function ProposalCard({ proposal }) {
+function ProposalCard({ proposal,getAllProposals }) {
   const { backendActor, isAuthenticated } = useAuth();
   const [imgSrc, setImgSrc] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
@@ -122,8 +119,11 @@ function ProposalCard({ proposal }) {
 
   const [kissCount, setKissCount] = useState(Number(proposal.votes));
   const handleKissButtonClick = async () => {
-    backendActor.addVote(proposal.id);
     setKissCount(prevCount => prevCount + 1);
+    await backendActor.addVote(proposal.id);
+    setTimeout(()=>{
+      getAllProposals()
+    },2000)
   };
 
   /*
@@ -156,6 +156,10 @@ const ProposalWall = () => {
   const { backendActor, isAuthenticated } = useAuth();
   const [displayedProposals, setDisplayedProposals] = useState([]);
   const [sliderValue, setSliderValue] = useState(6);
+
+  useEffect(()=>{
+
+  },[displayedProposals])
 
   useEffect(() => {
     getAllProposals()
@@ -192,7 +196,7 @@ const ProposalWall = () => {
 
       <div className="ProposalWall" onScroll={handleScroll} style={{ width: `${sliderValue * 250}px` }}>
         {displayedProposals && displayedProposals.map(proposal => (
-          <ProposalCard key={Number(proposal.id)} proposal={proposal} />
+          <ProposalCard key={Number(proposal.id)} proposal={proposal} getAllProposals={getAllProposals} />
         ))}
       </div>
     </>
