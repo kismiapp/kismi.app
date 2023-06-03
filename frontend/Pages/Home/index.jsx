@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import CountDownTimer from "../../components/CountdownTimer"
 import ProposalWall from "../../components/wall"
 import { useAuth } from "../../auth";
+import "./index.css";
 
 function Home({ isLoading }) {
   const { backendActor } = useAuth();
@@ -33,8 +34,8 @@ function Home({ isLoading }) {
 
   return (
     <>
-    <div className="title">COMPETITION ROUND 001</div>
-    <div className="title2">Current Round Timer</div>
+    <div className="title-counter">COMPETITION ROUND 001</div>
+    <div className="title-counter2">Current Round Timer</div>
       { targetDate &&  <CountDownTimer targetDate={targetDate} />}
       {targetDate && <ProposalWall voteLock={voteLock} /> }
     </>

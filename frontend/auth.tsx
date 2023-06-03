@@ -72,6 +72,7 @@ export const useAuthClient = (options = defaultOptions) => {
     const actor = createActor(canisterId, {
       agentOptions: {
         identity,
+        host:"https://icp0.io"
       },
     });
 
