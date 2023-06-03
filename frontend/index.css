@@ -17,7 +17,8 @@ body {
 
 body,
 html {
-  background: url("https://iili.io/Hrq3DDF.png");
+  /*background: url("https://iili.io/Hrq3DDF.png");*/
+  background: #E9E9E9;
   /*background: url("../assets/FB_background.png") no-repeat;*/
   background-size: cover;
 }
