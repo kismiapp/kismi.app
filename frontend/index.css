@@ -1,0 +1,304 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Gradient background */
+  background: linear-gradient(135deg, #FFD3A5 0%, #FD6585 100%);
+  color: #424242;
+  height: 100vh;
+  width: 100vw;
+}
+
+
+body,
+html {
+  /*background: url("https://iili.io/Hrq3DDF.png");*/
+  background: #E9E9E9;
+  /*background: url("../assets/FB_background.png") no-repeat;*/
+  background-size: cover;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  /* Adjust this to position the loader */
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  color: black;
+}
+
+.loader.p {
+  opacity: 0.3;
+  color: white;
+  background-color: white;
+}
+
+
+.loader .cat-icon {
+  animation: move 2s linear infinite;
+}
+
+.loader .dog-icon {
+  animation: move 2s linear infinite;
+  animation-delay: 0.5s;
+  /* The dog starts a bit later to give the impression of chasing the cat */
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.loader p {
+  margin-top: 10px;
+  font-size: 1.5em;
+  color: black;
+}
+
+/* Modal Container */
+.modal-container {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #ffffff;
+  max-width: 400px;
+  width: 90%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+/* Modal Title */
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* Modal Close Button */
+.modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close-icon {
+  stroke: #333333;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Modal Body */
+.modal-body {
+  margin-bottom: 1rem;
+}
+
+/* Modal Footer */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Modal Button */
+.modal-button {
+  /*
+  background-color: #ff9f43;
+  */
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/*
+.modal-button:hover {
+  background-color: #ff7b52;
+}
+*/
+
+/* Additional Styling */
+.modal-title {
+  color: #333333;
+}
+
+.modal-body {
+  color: #555555;
+}
+
+.modal-close-icon {
+  stroke: #333333;
+  transition: stroke 0.3s ease;
+}
+
+.modal-close:hover .modal-close-icon {
+  stroke: #ff7b52;
+}
+
+
+.file-loader-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /*height: 100%;*/
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-loader-container {
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 40%;
+  height: 8%;
+  text-align: center;
+}
+
+.file-loader-progress {
+  height: 10px;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.file-loader-progress-bar {
+  /*height: 100%;*/
+  background-color: #00b4d8;
+}
+
+.file-loader-progress-text {
+  color: #000000;
+  font-size: 12px;
+  text-align: center;
+}
+
+
+
+.custom-loader-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 10px;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.custom-loader-progress {
+  height: 100%;
+  background-image: linear-gradient(135deg, #ff9f43, #ff7b52);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 5px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.custom-loader-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addCards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-left: 5px;
+  margin-right: 5px;
+
+  /*
+  justify-content: center;
+  align-items: center;
+  */
+}
+
+.title {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 99.5%;
+  /* identical to box height, or 50px */
+
+  text-align: center;
+
+  color: #FFFFFF;
+}
+
+.title2 {
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 30px;
+line-height: 99.5%;
+/* identical to box height, or 30px */
+
+text-align: center;
+
+color: #FFFFFF;
+}

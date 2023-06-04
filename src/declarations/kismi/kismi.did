@@ -1,0 +1,93 @@
+type UpdateProfile = 
+ record {
+   name: text;
+   profilePic: blob;
+ };
+type Time = int;
+type Result_2 = 
+ variant {
+   err: text;
+   ok: nat;
+ };
+type Result_1 = 
+ variant {
+   err: text;
+   ok;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok: Contestant;
+ };
+type ProposalProfile = 
+ record {
+   name: text;
+   profilePic: opt blob;
+ };
+type ProposalCall = 
+ record {
+   content: Content;
+   contest: nat;
+   description: text;
+   votes: nat;
+ };
+type Profile = 
+ record {
+   admin: Admin;
+   badget: bool;
+   lastProposal: opt Time;
+   name: text;
+   profilePic: opt blob;
+   proposalsCompleted: nat;
+ };
+type ContestantResponse = 
+ record {
+   completed: bool;
+   description: text;
+   id: nat;
+   votes: nat;
+   votesWallet: principal;
+ };
+type Contestant = 
+ record {
+   completed: bool;
+   content: Content;
+   contest: nat;
+   description: text;
+   id: nat;
+   owner: principal;
+   votes: nat;
+   votesWallet: principal;
+ };
+type ContestCall = 
+ record {
+   end: Time;
+   name: text;
+ };
+type Content = 
+ variant {
+   Image: blob;
+   Text: text;
+   Video: nat;
+ };
+type Admin = bool;
+service : {
+  addKisses: () -> () oneway;
+  addNewContestant: (ProposalCall) -> (Result_2);
+  addProposalChunk: (nat, blob) -> (Result_1);
+  addVote: (nat) -> (Result_1);
+  caller: () -> (text) query;
+  createContest: (ContestCall) -> (bool);
+  getActiveContest: () -> (Time);
+  getAllContestants: () -> (vec ContestantResponse) query;
+  getAllContestantsByVotes: () -> (vec ContestantResponse) query;
+  getContent: (nat) -> (Content) query;
+  getContestant: (nat) -> (Result) query;
+  getKisses: () -> (nat) query;
+  getProfile: () -> (Profile) query;
+  getProposalProfilePic: (nat) -> (opt ProposalProfile) query;
+  makeAdmin: (text, text) -> (text);
+  session: () -> (Profile) query;
+  toNat8: (Content) -> (vec nat8);
+  updateProfile: (UpdateProfile) -> (Profile);
+}

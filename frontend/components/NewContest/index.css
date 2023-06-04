@@ -1,0 +1,83 @@
+/* NewContestForm.css */
+
+.NewContestCard {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 20px;
+    border-radius: 10px;
+    background: #f3f3f3;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    min-width: 500px;
+    margin: 20px auto;
+    color: #424242;
+    text-align:vertical;
+}
+
+.NewContestCard label {
+    font-weight: 600;
+    color: #424242;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.NewContestCard input[type="text"], 
+.NewContestCard input[type="number"],
+.NewContestCard textarea {
+    width: 60%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+.NewContestCard select {
+    width: 80%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.NewContestCard .file-input {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.NewContestCard .file-input input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    /*height: 100%;*/
+    opacity: 0;
+    cursor: pointer;
+}
+
+.NewContestCard .file-input span {
+    display: block;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.NewContestCard button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: #ff4081;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+    align-self: center;
+}
+
+.NewContestCard button:hover {
+    background: #e60073;
+}
