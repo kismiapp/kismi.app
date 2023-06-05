@@ -6,10 +6,12 @@ import React from 'react';
 const ExpiredNotice = () => {
     return (
         <div className="expired-notice">
-            <span>Expired!!!</span>
-            <p>Please select a future date and time.</p>
+            <span>Contest Ended!!!</span>
+            <p>The winner is: </p>
+            El ganador va aquí sin el footer o con el footer disabled
         </div>
-    );
+        //<ProposalCard key={Number(proposal.id)} proposal={proposal} getAllProposals={getAllProposals} voteLock={voteLock} sliderValue={sliderValue} />
+    ); //Se me ocurre una función que se llame getWinner en el backend, que le des el numero del contest y te devuelva el primer elemento
 };
 
 const ShowCounter = ({ days, hours, minutes, seconds }) => {

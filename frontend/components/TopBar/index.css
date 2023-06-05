@@ -1,16 +1,27 @@
+/* Common styles for both desktop and mobile */
 .TopBar {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  /* padding: 10px; */
   background: linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);
   margin-bottom: 5px;
-  width: 100vw;
-  height: 65px;
-  /* margin-left: 0; */
-  /* color: #424242; */
 }
+
+/* Styles for desktop */
+@media (min-width: 768px) {
+  .TopBar {
+    width: 100vw;
+  }
+}
+
+/* Styles for mobile */
+@media (max-width: 767px) {
+  .TopBar {
+    /* Add your mobile-specific styles here */
+  }
+}
+
 
 .TopBar h1 {
   font-size: 1.5em;
@@ -73,7 +84,7 @@ img.profile-pic {
 
 .profile-link {
   position: "relative";
-  display: inline-block;
+  /*display: inline-block;*/
 }
 
 .profile-menu {
@@ -98,7 +109,7 @@ img.profile-pic {
 }
 
 .TopBar .badge {
-  display: inline-block;
+  /*display: inline-block;*/
   font-size: 0.6em;
   margin-left: 10px;
   padding: 5px 10px;
@@ -138,6 +149,10 @@ img.profile-pic {
     font-size: 14px;
     padding: 15px;
     margin: 20px;
+  }
+
+  h2 {
+    font-size: 14px;
   }
 
   .cat-icon,

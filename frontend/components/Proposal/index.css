@@ -1,9 +1,9 @@
 :root {
-  --primary-background-color: #FFFCF9; /* Pastel White */
-  --secondary-background-color: #FFFCF9; /* Pastel White */
-  --primary-color: #1A202C; /* Almost Black for text */
-  --secondary-color: #FDBA74; /* Pastel Orange */
-  --border-color: #FFFCF9; /* Make border color same as background color */
+  /*--primary-background-color: #FFFCF9; /* Pastel White */
+  /*--secondary-background-color: #FFFCF9; /* Pastel White */
+  /*--primary-color: #1A202C; /* Almost Black for text */
+  /*--secondary-color: #FDBA74; /* Pastel Orange */
+  /*--border-color: #FFFCF9; /* Make border color same as background color */
   --primary-border-radius: 0.375rem;
 }
 
@@ -65,7 +65,7 @@ body {
   border-radius: var(--primary-border-radius);
   background: var(--secondary-background-color);
   border: 1px solid var(--border-color);
-  max-width: 500px;
+  /*max-width: 500px;*/
   margin: 1.25rem;
   box-shadow: none !important;
 }
@@ -103,9 +103,6 @@ body {
   color: var(--secondary-color);
 }
 
-
-
-
 .commenter-profile {
   display: flex;
   align-items: flex-start;
@@ -127,10 +124,6 @@ body {
   height: 100%;
   object-fit: cover;
 }
-
-
-
-
 
 .comment {
   display: flex;

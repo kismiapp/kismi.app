@@ -46,7 +46,7 @@
 }
 
 .ProfileCard .badge {
-    display: inline-block;
+    /*display: inline-block;*/
     font-size: 0.6em;
     margin-left: 10px;
     padding: 5px 10px;

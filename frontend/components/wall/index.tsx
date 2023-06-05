@@ -3,6 +3,7 @@ import { Slider } from '@mui/material';
 import "./index.css";
 import { useAuth } from '../../auth';
 import { useNavigate } from 'react-router-dom';
+import CountDownTimer from "../../components/CountdownTimer"
 
 function LoadingContent({ isLoading, imgSrc }) {
   if (!isLoading) {
@@ -17,7 +18,7 @@ function LoadingContent({ isLoading, imgSrc }) {
   );
 }
 
-function ProposalCard({ proposal, getAllProposals,voteLock }) {
+function ProposalCard({ proposal, getAllProposals, voteLock, sliderValue }) {
   const { backendActor, isAuthenticated } = useAuth();
   const [imgSrc, setImgSrc] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
@@ -67,6 +68,8 @@ function ProposalCard({ proposal, getAllProposals,voteLock }) {
     }
   }, [content, videoRef, profilePicBlob]); // only re-run when 'content' changes
 
+  let scalingFactor = 240 - (sliderValue * 20);
+
   const renderContent = () => {
     // while fetching Image or Video
     if ('Image' in content && !imgSrc) {
@@ -74,7 +77,7 @@ function ProposalCard({ proposal, getAllProposals,voteLock }) {
     } else if ('Video' in content && !videoUrl) {
       return <LoadingContent isLoading={true} imgSrc={"../assets/videoLoader.png"} />;
     } else if ('Image' in content) {
-      return imgSrc ? <img id={`proposal-img${Number(proposal.id)}`} className="content" src={imgSrc} alt="Content" /> : null;
+      return imgSrc ? <img id={`proposal-img${Number(proposal.id)}`} className="content" src={imgSrc} alt="Content" style={{ width: `${scalingFactor}%` }}/> : null;
     } else if ('Video' in content) {
       return videoUrl ? <video id={`proposal-video${Number(proposal.id)}`} className="content" src={videoUrl} controls /> : null;
     }
@@ -137,22 +140,22 @@ function ProposalCard({ proposal, getAllProposals,voteLock }) {
               {`${Number(proposal.icp)}  `}<img src="https://iili.io/Hr5iCR2.png"></img>
   */
 
-              /*
-    <div className="ContestantPicture">
-      <div className="image-container">
-        <h6>{proposal.description}</h6>
-        {content && renderContent()}
-        <div className="footer">
-          <button className="kissButton" onClick={handleKissButtonClick}>KISS</button>&nbsp;
-          <div className="kissCount">
-            {`${kissCount}  `}<img src="https://iili.io/Hr5iCR2.png"></img>
-          </div>
-        </div>
-      </div>
-    </div>
-              */
+  /*
+<div className="ContestantPicture">
+<div className="image-container">
+<h6>{proposal.description}</h6>
+{content && renderContent()}
+<div className="footer">
+<button className="kissButton" onClick={handleKissButtonClick}>KISS</button>&nbsp;
+<div className="kissCount">
+{`${kissCount}  `}<img src="https://iili.io/Hr5iCR2.png"></img>
+</div>
+</div>
+</div>
+</div>
+  */
   return (
-    <div className="ContestantPicture">
+    <div className="ContestantPicture" style={{ width: `${100/sliderValue}vw` }}>
       <div className="image-container">
         <h6>{proposal.description}</h6>
         {content && renderContent()}
@@ -167,14 +170,36 @@ function ProposalCard({ proposal, getAllProposals,voteLock }) {
   );
 }
 
-const ProposalWall = ({voteLock}) => {
+//const ProposalWall = ({ voteLock }) => {
+const ProposalWall = () => {
   const { backendActor, isAuthenticated } = useAuth();
   const [displayedProposals, setDisplayedProposals] = useState([]);
-  const [sliderValue, setSliderValue] = useState(6);
+  const [sliderValue, setSliderValue] = useState(7);
+  const [targetDate, setTargetDate] = useState(null)
+  const [voteLock, setVoteLock] = useState(false)
 
   useEffect(() => {
 
   }, [displayedProposals])
+
+  useEffect(() => {
+    if (!targetDate) {
+      getCompEnd()
+    }
+  }, [backendActor])
+
+  const getCompEnd = async () => {
+    if (backendActor) {
+      let response = await backendActor.getActiveContest();
+      if (response > 0) {
+        console.log("new targte date", response)
+        setTargetDate(new Date(Number(response)))
+      } else {
+        setTargetDate(new Date(0))
+        setVoteLock(true)
+      }
+    }
+  }
 
   useEffect(() => {
     getAllProposals()
@@ -201,20 +226,26 @@ const ProposalWall = ({voteLock}) => {
   };
   /*    <div className="ProposalWall" onScroll={handleScroll}>
       <Slider aria-label="Slider" defaultValue={3} color="secondary" onChange={handleSliderChange} />
+           <div className="ProposalWall" onScroll={handleScroll} style={{ width: `${sliderValue * 250}px` }}>
+                 <div className="ProposalWall" onScroll={handleScroll} style={{ width: `${sliderValue*14.28}vw` }}>
   */
   return (
-    <>
-      <div className="mt-2 hover:opacity-100 opacity-50 transition-all">
-        <div className="text-center text-xs opacity-50">Columns: {sliderValue}</div>
-        <Slider aria-label="Columns" value={sliderValue} onChange={handleSliderChange} min={1} max={6} step={1} />
+    <div className="contentWall">
+      <div className="title">COMPETITION ROUND 001</div>
+      <div className="title2">Current Round Timer</div>
+      {targetDate && <CountDownTimer targetDate={targetDate} />}
+
+      <div className="slider">
+        Columns: {sliderValue}
+        <Slider aria-label="Columns" value={sliderValue} onChange={handleSliderChange} min={1} max={7} step={1} />
       </div>
 
-      <div className="ProposalWall" onScroll={handleScroll} style={{ width: `${sliderValue * 250}px` }}>
+      <div className="ProposalWall" onScroll={handleScroll}>
         {displayedProposals && displayedProposals.map(proposal => (
-          <ProposalCard key={Number(proposal.id)} proposal={proposal} getAllProposals={getAllProposals} voteLock={voteLock} />
+          <ProposalCard key={Number(proposal.id)} proposal={proposal} getAllProposals={getAllProposals} voteLock={voteLock} sliderValue={sliderValue} />
         ))}
       </div>
-    </>
+    </div>
   );
 
 };

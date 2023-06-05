@@ -28,7 +28,7 @@ actor kissmi {
   type Account = Account.Account;
   type Video = TrieMap.TrieMap<Text, [Nat8]>;
 
-/*
+  /*
   let coinName : Text = "pawcoins";
   let coinSymbol : Text = "MOC";
   var coinSupply : Nat = 0;
@@ -110,9 +110,9 @@ actor kissmi {
     profilePic : Blob
   };
 
-   public type ContestCall = {
+  public type ContestCall = {
     name : Text;
-    end : Time;
+    end : Time
   };
 
   public type Contest = {
@@ -535,21 +535,21 @@ actor kissmi {
       owner = msg.caller;
       subaccount = ?defaultSub
     };
-      let newid = contestants.size();
-      let newContestant : Contestant = {
-        id = newid;
-        votes = contestant.votes;
-        description = contestant.description;
-        content = contestant.content;
-        votesWallet = msg.caller;
-        completed = false;
-        owner = msg.caller;
-        contest = 1
-      };
-      switch (contestants.put(Nat.toText(newid), newContestant)) {
-        case (added) {
-          return #ok(newid)
-        }
+    let newid = contestants.size();
+    let newContestant : Contestant = {
+      id = newid;
+      votes = contestant.votes;
+      description = contestant.description;
+      content = contestant.content;
+      votesWallet = msg.caller;
+      completed = false;
+      owner = msg.caller;
+      contest = 1
+    };
+    switch (contestants.put(Nat.toText(newid), newContestant)) {
+      case (added) {
+        return #ok(newid)
+      }
     };
     return #err("Couldn't add the contestant")
   };
@@ -614,7 +614,7 @@ actor kissmi {
   };
 */
 
-  
+
   public shared query (msg) func getKisses() : async Nat {
     let account : Account = {
       owner = msg.caller;
@@ -625,7 +625,6 @@ actor kissmi {
       case (?kisses) { return kisses }
     }
   };
-  
 
   /*
   private func _transfer(from : Account.Account, to : Account.Account, amount : Nat) {
@@ -649,7 +648,7 @@ actor kissmi {
     }
   };
 
-/*
+  /*
   private func _airDrop(to : Account.Account) {
     var toCoinsAirdrop = 100;
     ledger.put(to, toCoinsAirdrop)
@@ -803,14 +802,13 @@ actor kissmi {
     return Buffer.toArray(ContestantBuffer)
   };
 
-
-  public shared(msg) func getActiveContest(): async Time {
-      switch(contestLedger.get(Nat.toText(0))){
-        case null {return 00000};
-        case(?found){
-            return found.end;
-        }
+  public shared (msg) func getActiveContest() : async Time {
+    switch (contestLedger.get(Nat.toText(0))) {
+      case null { return 00000 };
+      case (?found) {
+        return found.end
       }
+    }
   };
 
 
@@ -839,11 +837,11 @@ actor kissmi {
       subaccount = null
     };
     let newid = contestLedger.size();
-    let newContest:Contest = {
-        active=true;
-        end=contest.end;
-        id=newid;
-        name=contest.name;
+    let newContest : Contest = {
+      active = true;
+      end = contest.end;
+      id = newid;
+      name = contest.name
     };
     switch (profiles.get(account)) {
       case null { return false };
@@ -856,9 +854,5 @@ actor kissmi {
       }
     }
   };
-
-
-
-
 
 }
