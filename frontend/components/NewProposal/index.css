@@ -43,7 +43,7 @@
 
 .NewProposalCard .file-input {
     position: relative;
-    display: inline-block;
+    /*display: inline-block;*/
     cursor: pointer;
     overflow: hidden;
 }
@@ -59,7 +59,7 @@
 }
 
 .NewProposalCard .file-input span {
-    display: block;
+    /*display: block;*/
     padding: 10px;
     background: #fff;
     border: 1px solid #ccc;
