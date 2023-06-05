@@ -614,6 +614,7 @@ actor kissmi {
   };
 */
 
+
   public shared query (msg) func getKisses() : async Nat {
     let account : Account = {
       owner = msg.caller;
@@ -810,6 +811,26 @@ actor kissmi {
     }
   };
 
+
+
+  public shared(msg) func stopActiveContest(): async Bool {
+     switch(contestLedger.get(Nat.toText(0))){
+        case null {return false};
+        case(?found){
+            let newContest:Contest = {
+              active=true;
+              end=0000000;
+              id=found.id;
+              name=found.name;
+            };
+             contestLedger.put(Nat.toText(0),newContest);
+             return true
+        }
+      }
+  };
+
+
+
   public shared (msg) func createContest(contest : ContestCall) : async Bool {
     let account : Account = {
       owner = msg.caller;
@@ -826,7 +847,7 @@ actor kissmi {
       case null { return false };
       case (?found) {
         if (found.admin == true) {
-          contestLedger.put(Nat.toText(newid), newContest);
+          contestLedger.put(Nat.toText(0), newContest);
           return true
         };
         return false

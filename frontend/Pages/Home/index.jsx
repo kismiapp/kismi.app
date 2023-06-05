@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import CountDownTimer from "../../components/CountdownTimer"
 import ProposalWall from "../../components/wall"
 import { useAuth } from "../../auth";
+import "./index.css";
 
 function Home({ isLoading }) {
   const { backendActor } = useAuth();
