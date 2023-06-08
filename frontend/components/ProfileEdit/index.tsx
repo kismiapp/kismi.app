@@ -6,20 +6,6 @@ import { useAuth } from '../../auth';
 import { useNavigate } from "react-router-dom"
 
 
-const Wrapper = ({ children }) => {
-  const [isVisible, setIsVisible] = useState(true);
-
-  const handleClose = () => {
-    setIsVisible(false);
-  };
-
-  return (
-    <div className={`wrapper ${isVisible ? '' : 'hidden'}`}>
-      <button className="close-button" onClick={handleClose}>X</button>
-      {children}
-    </div>
-  );
-};
 
 
 const ProfileForm = ({ currentProfile, onUpdate, onFileChange, setProfile }) => {
@@ -121,9 +107,7 @@ const App = ({ setIsLoading, profile, setModalMsg, setModal,reLoad }) => {
   };
 
   return (
-    <Wrapper>
-      {profile && isAuthenticated && <ProfileForm setProfile={setCurrentProfile} currentProfile={currentProfile} onUpdate={handleProfileUpdate} onFileChange={onFileChange} />}
-    </Wrapper>
+      profile && isAuthenticated && <ProfileForm setProfile={setCurrentProfile} currentProfile={currentProfile} onUpdate={handleProfileUpdate} onFileChange={onFileChange} />
   );
 };
 

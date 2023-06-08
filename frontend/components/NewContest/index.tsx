@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 import { useAuth } from '../../auth';
 
-const NewContestForm = ({ setIsLoading, loading, setModal, setModalMsg, setFileLoader }) => {
+const NewContestForm = ({ setIsLoading, loading, setModal, setModalMsg, setFileLoader,getAllUnactiveContests }) => {
   const { backendActor, isAuthenticated } = useAuth();
 
   const [name, setName] = useState(null);
@@ -23,6 +23,7 @@ const NewContestForm = ({ setIsLoading, loading, setModal, setModalMsg, setFileL
           name:name
         }
         let responses = await backendActor.createContest(contest)
+        getAllUnactiveContests()
         console.log("contest has been created",responses)
     }else{
       setModal(true)

@@ -3,7 +3,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   position: relative;
-  /*height: 100vh;*/
+  height: 100vh;
   min-width: 200px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -45,14 +45,14 @@
   /*max-width: 244px;*/
   /* increased max-width */
   min-width: 100px;
-  margin: 5px;
+  /*margin: 20px;*/
   /*max-height: 300px;*/
   min-height: 100px;
   color: #424242;
 }
 
 .ContestantPicture .card-header {
-  /*width: 100%;*/
+  width: 100%;
   display: flex;
   align-items: center;
 }
@@ -94,7 +94,7 @@
 
 .ContestantPicture img.content,
 .ContestantPicture video.content {
-  /*max-width: 244px;*/
+  max-width: 244px;
   /* for content image and video */
   min-height: 360;
   border-radius: 10px;
@@ -165,7 +165,7 @@
 
   .ContestantPicture img.content,
   .ContestantPicture video.content {
-    /*max-width: 100%;*/
+    max-width: 100%;
     min-height: 150px;
   }
 }
@@ -269,17 +269,12 @@
 
 .image-container {
   position: relative;
-  display: "inline-block";
-  height: "auto";
 }
-
 
 .image-container img {
   /* Adjust the width and height according to your requirements */
-  /*width: 100%;
-  height: 100%;*/
-  display: "inline-block";
-  height: "auto";
+  width: 100%;
+  height: 100%;
 }
 
 .image-container h6 {
@@ -347,11 +342,3 @@
   height: 16px;
 }
 
-.slider {
-  width: 150px;
-  text-align: center;
-}
-
-.contentWall {
-  align-items: center;
-}

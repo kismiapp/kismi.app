@@ -1,0 +1,350 @@
+.ProposalWall {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    height: 100vh;
+    min-width: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transform-style: preserve-3d;
+    overflow: 'hidden';
+  }
+  
+  .ProposalWall::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .ProposalWall::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .ProposalWall::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #FFD3A5 0%, #FD6585 100%);
+    border-radius: 10px;
+  }
+  
+  .ProposalWall::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #FFD3A5 70%, #FD6585 100%);
+  }
+  
+  /* ProposalCard.css */
+  
+  .ContestantPicture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*padding: 20px;*/
+    border-radius: 40px;
+    /*
+    background: #f3f3f3;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);*/
+    /*margin-bottom: 5px;*/
+    /* increased margin-bottom */
+    /*max-width: 244px;*/
+    /* increased max-width */
+    min-width: 100px;
+    /*margin: 20px;*/
+    /*max-height: 300px;*/
+    min-height: 100px;
+    color: #424242;
+  }
+  
+  .ContestantPicture .card-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .ContestantPicture img.profile-pic {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .ContestantPicture h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .ContestantPicture p {
+    font-size: 1em;
+    color: #424242;
+    /*height: 400px;
+    width: 600px;*/
+  }
+  
+  /*
+  .ProposalCard .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    height: 20px;
+  }
+  */
+  
+  .ContestantPicture .comments-section {
+    /* Define your comments section style here */
+    margin-top: 2px;
+  }
+  
+  .ContestantPicture img.content,
+  .ContestantPicture video.content {
+    max-width: 244px;
+    /* for content image and video */
+    min-height: 360;
+    border-radius: 10px;
+  }
+  
+  /* Responsive Adjustments */
+  
+  @media screen and (max-width: 768px) {
+  
+    /* Adjustments for screens up to 768px */
+    .ContestantPicture {
+      padding: 10px;
+      margin-bottom: 30px;
+      max-width: 500px;
+    }
+  
+    .ContestantPicture img.profile-pic {
+      width: 50px;
+      height: 50px;
+    }
+  
+    .ContestantPicture p {
+      height: auto;
+      width: 100%;
+    }
+  
+    .ProposalWall {
+      min-width: 00px;
+    }
+  
+    .ContestantPicture .footer {
+      height: 80px;
+    }
+  
+    .ContestantPicture img.content,
+    .ContestantPicture video.content {
+      max-width: 100%;
+      /*min-height: 200px;*/
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+  
+    /* Adjustments for screens up to 480px */
+    .ContestantPicture {
+      padding: 5px;
+      margin-bottom: 20px;
+      max-width: 300px;
+    }
+  
+    .ProposalWall {
+      min-width: 00px;
+    }
+  
+    .ContestantPicture img.profile-pic {
+      width: 40px;
+      height: 40px;
+    }
+  
+    .ContestantPicture p {
+      height: auto;
+      width: 100%;
+    }
+  
+    .ContestantPicture .footer {
+      height: 60px;
+    }
+  
+    .ContestantPicture img.content,
+    .ContestantPicture video.content {
+      max-width: 100%;
+      min-height: 150px;
+    }
+  }
+  
+  
+  .LoadingContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .LoadingContent img {
+    width: 100%;
+    max-height: 40vh;
+    /* 40% of viewport height */
+    object-fit: contain;
+    animation: breathing 3s ease-in-out infinite;
+  }
+  
+  @keyframes breathing {
+    0% {
+      transform: scale(1);
+    }
+  
+    50% {
+      transform: scale(1.1);
+    }
+  
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  
+  .LoadingContent .loading-text {
+    overflow: hidden;
+    border-right: .15em solid orange;
+    white-space: nowrap;
+    letter-spacing: .15em;
+    animation: typing 4s steps(40, end), blink-caret .75s step-end infinite;
+    height: 1em;
+    /* Adjust height of the loading text */
+    width: 80%;
+    /* Set the width of the text to be smaller than the image */
+    text-align: center;
+    /* Center the text */
+  }
+  
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+  
+    to {
+      width: 100%;
+    }
+  }
+  
+  @keyframes blink-caret {
+  
+    from,
+    to {
+      border-color: transparent
+    }
+  
+    50% {
+      border-color: orange;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+  
+    /* Adjustments for screens up to 768px */
+    .LoadingContent img {
+      max-height: 30vh;
+      /* Adjust height as per requirement */
+    }
+  
+    .LoadingContent .loading-text {
+      width: 70%;
+      /* Set the width of the text to be smaller than the image */
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+  
+    /* Adjustments for screens up to 480px */
+    .LoadingContent img {
+      max-height: 20vh;
+      /* Adjust height as per requirement */
+    }
+  
+    .LoadingContent .loading-text {
+      width: 60%;
+      /* Set the width of the text to be smaller than the image */
+    }
+  }
+  
+  .image-container {
+    position: relative;
+  }
+  
+  .image-container img {
+    /* Adjust the width and height according to your requirements */
+    width: 100%;
+    height: 100%;
+  }
+  
+  .image-container h6 {
+    position: absolute;
+    left: 0;
+    padding: 8px;
+    background-color: #000000b3;
+    color: #fff;
+    font-size: 13px;
+    text-align: left;
+    border-radius: 45px;
+    margin: 5px 0 0 5px;
+  }
+  
+  .ContestantPicture .footer {
+    position: absolute;
+    display: flex;
+    /* flex-direction: row; */
+    /* align-items: center; */
+    /* justify-content: space-evenly; */
+    /* top: 0; */
+    /* right: 0; */
+    margin: 0;
+    bottom: 0;
+    /* padding-right: 5%; */
+    margin-bottom: 5px;
+    margin-left: 15px;
+    /* align-items: start;*/
+  }
+  
+  .footer .kissButton {
+    width: 89px;
+    height: 30px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 99.5%;
+    background: #E60023;
+    border-radius: 50px;
+    color: #FFFFFF;
+    text-align: center;
+    padding-top: 5px;
+  }
+  
+  .footer .kissCount {
+    width: 89px;
+    height: 30px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 99.5%;
+    /* identical to box height, or 20px */
+    color: #FFFFFF;
+    border: 1px solid #E60023;
+    border-radius: 50px;
+    text-align: center;
+    background-color:rgba(255,255,255,0.3);
+    padding-top: 5px;
+  }
+  
+  .footer .kissCount img {
+    width: 28px;
+    height: 16px;
+  }
+
+
+  .ContestantPicture.blur-effect {
+    filter: blur(3px);
+  }
+  
+  

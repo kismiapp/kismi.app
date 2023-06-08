@@ -1,0 +1,72 @@
+.ContestList {
+    padding: 15px;
+    margin: 20px;
+    max-height: 400px; /* Adjust this to control the height of the list */
+    overflow-y: auto; /* Allows scrolling */
+    border-radius: 5px;
+  }
+  
+  .ContestList > div {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .ContestList > div h2 {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .ContestList > div p {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .ContestList > div button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .ContestList > div button:disabled {
+    cursor: not-allowed;
+  }
+  
+  .ContestList > div button:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+
+  @media (max-width: 768px) {
+    .ContestList {
+      max-height: 100%;
+    }
+
+    .ContestList > div {
+      margin: 10px;
+      padding: 10px;
+    }
+
+    .ContestList > div h2 {
+      font-size: 20px;
+    }
+
+    .ContestList > div p {
+      font-size: 14px;
+    }
+
+    .ContestList > div button {
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+  }
+  

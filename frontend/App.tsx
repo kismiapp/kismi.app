@@ -12,8 +12,10 @@ import TopBar from "./components/TopBar"
 import Proposal from "./components/Proposal"
 import Home from "./Pages/Home";
 import User from "./Pages/User";
+import History from "./Pages/History";
 import FileLoader from "./components/FileLoader";
 import Modal from "./components/Modal";
+import FAQ from "./Pages/FAQ";
 
 import "./index.css"
 import {
@@ -37,6 +39,7 @@ function AppPage() {
   const { isAuthenticated, identity, login, backendActor, logout } = useAuth()
   const [isLoading, setIsLoading] = useState(true)
   const [profile, setProfile] = useState(null)
+  const [socialProfile, setSocialProfile] = useState(null);
   const [caller, setCaller] = useState(null)
   const [icpBalance, setBalance] = useState(null)
   const [kisses, setKisses] = useState(0)
@@ -61,12 +64,15 @@ function AppPage() {
   const getIsReady = async () => {
     const caller = await backendActor.caller()
     const profile = await backendActor.getProfile()
+    const socialProfile = await backendActor.getSocialProfile()
     const pawCoins = await backendActor.getKisses()
     console.log("caller",caller)
     console.log("profile",profile)
+    console.log("social Profile",socialProfile)
     setCaller(caller)
     setProfile(profile)
     setKisses(kisses)
+    setSocialProfile(socialProfile.ok)
   }
 
   useEffect(() => { }, [modal, fileloader])
@@ -113,6 +119,7 @@ function AppPage() {
                   profile={profile}
                   isLoading={isLoading}
                   reLoad={getIsReady}
+                  socialProfile={socialProfile}
                 />
               }
             />
@@ -131,6 +138,18 @@ function AppPage() {
                   reLoad={getIsReady}
                 />
               }
+            />
+            <Route
+            path="/history"
+            element={
+              <History/>
+            }
+            />
+               <Route
+            path="/faq"
+            element={
+              <FAQ/>
+            }
             />
           </Routes>
         </Router>
