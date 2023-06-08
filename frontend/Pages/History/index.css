@@ -1,0 +1,28 @@
+.HistoryList {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .HistoryList h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .HistoryList div {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  
+  .HistoryList h2 {
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .HistoryList p {
+    font-size: 16px;
+    color: #666;
+  }
+  

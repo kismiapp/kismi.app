@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     margin: 0.5rem;
+    max-width: 500px;
   }
   
   .countdown-container > form {
@@ -23,6 +24,7 @@
     margin: 0.5rem;
     background-color: #ececec;
     box-shadow: 10px 10px #cfc9c9;
+    max-width: 500px;
   }
   
   .expired-notice > span {

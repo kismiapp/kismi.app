@@ -1,15 +1,22 @@
 import './datetime.css';
 import DateTimeDisplay from './DateTimeDisplay';
 import useCountDown from '../../hooks/useCountdown';
-import React from 'react';
+import React, { useEffect } from 'react';
+import ContestantCard from '../ContestantCard';
 
-const ExpiredNotice = () => {
+const ExpiredNotice = ({winner,getWinner,lockVotes}) => {
+
+    useEffect(()=>{
+        lockVotes()
+    },[])
+
     return (
         <div className="expired-notice">
-            <span>Expired!!!</span>
-            <p>Please select a future date and time.</p>
+            <span>Contest Ended!!!</span>
+           {winner && <ContestantCard key={Number(winner.id)} proposal={winner} getAllProposals={()=>{}} voteLock={true} />
+}
         </div>
-    );
+    ); //Se me ocurre una función que se llame getWinner en el backend, que le des el numero del contest y te devuelva el primer elemento
 };
 
 const ShowCounter = ({ days, hours, minutes, seconds }) => {
@@ -28,15 +35,16 @@ const ShowCounter = ({ days, hours, minutes, seconds }) => {
     );
 };
 
-const CountDownTimer = ({ targetDate }) => {
+const CountDownTimer = ({ targetDate,winner,getWinner,lockVotes,voteLock }) => {
     if(!targetDate){
         return null;
     }
 
-    const [days, hours, minutes, seconds] = useCountDown(targetDate);
+    const [days, hours, minutes, seconds] = useCountDown(targetDate,getWinner,voteLock);
 
     if (days + hours + minutes + seconds <= 0) {
-        return <ExpiredNotice />;
+
+        return <ExpiredNotice winner={winner} getWinner={getWinner} lockVotes={lockVotes} />;
     } else {
         return <ShowCounter days={days} hours={hours} minutes={minutes} seconds={seconds} />;
     }

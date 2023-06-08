@@ -1,50 +1,49 @@
+/* Common styles for both desktop and mobile */
 .TopBar {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  /* padding: 10px; */
   background: linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);
   margin-bottom: 5px;
-  width: 100vw;
-  height: 65px;
-  /* margin-left: 0; */
-  /* color: #424242; */
+  padding: 10px;
+  width: 100%;
+}
+.hamburger {
+  display: flex;
 }
 
-.TopBar h1 {
-  font-size: 1.5em;
+@media (max-width: 767px) {
+  .hamburger {
+     display: none;
+  }
+}
+
+/* Styles for desktop */
+@media (min-width: 768px) {
+  .TopBar {
+    flex-direction: row;
+    align-items: center;
+    width: 100vw;
+  }
+}
+
+/* We don't need to declare styles for mobile with max-width because we have started with mobile-first design */
+
+.TopBar h1, .TopBar h2, .TopBar h3 {
+  font-size: 1em;
+  text-align: center;
   margin-bottom: 10px;
 }
 
-.TopBar h2 {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 99.5%;
-  /* identical to box height, or 24px */
-
-  text-align: center;
-
-  color: #000000;
-  margin-right: 15px;
-  margin-left: 15px;
+@media (min-width: 768px) {
+  .TopBar h1, .TopBar h2, .TopBar h3 {
+    font-size: 1.5em;
+    margin-right: 15px;
+    margin-left: 15px;
+  }
 }
 
-.TopBar h3 {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 99.5%;
-  /* identical to box height, or 24px */
-  text-align: center;
-  color: #E60023;
-  width: 20vw;
-  margin-right: 5px;
-  margin-left: 5px;
-}
 
 .TopBar p {
   font-size: 1em;
@@ -73,7 +72,7 @@ img.profile-pic {
 
 .profile-link {
   position: "relative";
-  display: inline-block;
+  /*display: inline-block;*/
 }
 
 .profile-menu {
@@ -98,7 +97,7 @@ img.profile-pic {
 }
 
 .TopBar .badge {
-  display: inline-block;
+  /*display: inline-block;*/
   font-size: 0.6em;
   margin-left: 10px;
   padding: 5px 10px;
@@ -140,6 +139,10 @@ img.profile-pic {
     margin: 20px;
   }
 
+  h2 {
+    font-size: 14px;
+  }
+
   .cat-icon,
   .dog-icon {
     font-size: 24px !important;
@@ -159,3 +162,4 @@ img.profile-pic {
   background: #E60023;
   border-radius: 40px;
 }
+

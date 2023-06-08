@@ -20,6 +20,16 @@ const NewProposalForm = ({ setIsLoading, loading, setModal, setModalMsg, setFile
 
   const uploadFileInChunks = async (file) => {
     const maxSizeInBytes = 20 * 1024 * 1024; // 10 MB in bytes
+    let contest =1
+    let response = await backendActor.getActiveContest();
+    if(response.ok){
+      contest = response.ok.id;
+    }else{
+      setIsLoading(false)
+      setModal(true)
+      setModalMsg("no ongoin contest ATM")
+      return
+    }
 
     if (file.size < maxSizeInBytes) {
       // File is smaller than 10 MB
@@ -64,12 +74,15 @@ const NewProposalForm = ({ setIsLoading, loading, setModal, setModalMsg, setFile
       }
       // This is the first chunk, so create a new proposal
       if (position === 0) {
-        // This is the first chunk, so create a new proposal
+
+
+
+
         const contestant = {
           description,
           votes:0,
           content,
-          contest:1
+          contest:contest
         }
 
 

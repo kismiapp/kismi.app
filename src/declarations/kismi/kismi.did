@@ -4,20 +4,42 @@ type UpdateProfile =
    profilePic: blob;
  };
 type Time = int;
-type Result_2 = 
+type SocialProfile = 
+ record {
+   facebook: text;
+   instagram: text;
+   telegram: text;
+   twitter: text;
+ };
+type Result_5 = 
  variant {
    err: text;
    ok: nat;
  };
-type Result_1 = 
+type Result_4 = 
  variant {
    err: text;
    ok;
  };
-type Result = 
+type Result_3 = 
+ variant {
+   err: text;
+   ok: vec Contest;
+ };
+type Result_2 = 
  variant {
    err: text;
    ok: Contestant;
+ };
+type Result_1 = 
+ variant {
+   err: text;
+   ok: Contest;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok: SocialProfile;
  };
 type ProposalProfile = 
  record {
@@ -64,6 +86,14 @@ type ContestCall =
    end: Time;
    name: text;
  };
+type Contest = 
+ record {
+   active: bool;
+   completed: bool;
+   end: Time;
+   id: nat;
+   name: text;
+ };
 type Content = 
  variant {
    Image: blob;
@@ -73,21 +103,29 @@ type Content =
 type Admin = bool;
 service : {
   addKisses: () -> () oneway;
-  addNewContestant: (ProposalCall) -> (Result_2);
-  addProposalChunk: (nat, blob) -> (Result_1);
-  addVote: (nat) -> (Result_1);
+  addNewContestant: (ProposalCall) -> (Result_5);
+  addProposalChunk: (nat, blob) -> (Result_4);
+  addVote: (nat) -> (Result_4);
   caller: () -> (text) query;
   createContest: (ContestCall) -> (bool);
-  getActiveContest: () -> (Time);
+  getActiveContest: () -> (Result_1);
   getAllContestants: () -> (vec ContestantResponse) query;
   getAllContestantsByVotes: () -> (vec ContestantResponse) query;
+  getAllUnactiveContests: () -> (Result_3);
   getContent: (nat) -> (Content) query;
-  getContestant: (nat) -> (Result) query;
+  getContestant: (nat) -> (Result_2) query;
   getKisses: () -> (nat) query;
   getProfile: () -> (Profile) query;
   getProposalProfilePic: (nat) -> (opt ProposalProfile) query;
+  getSocialProfile: () -> (Result);
+  getUpcomingContest: () -> (Result_1);
+  getWinner: () -> (ContestantResponse) query;
+  history: () -> (vec Contest);
   makeAdmin: (text, text) -> (text);
   session: () -> (Profile) query;
+  startActiveContest: (nat) -> (bool);
+  stopActiveContest: (nat) -> (bool);
   toNat8: (Content) -> (vec nat8);
   updateProfile: (UpdateProfile) -> (Profile);
+  updateSocialProfile: (SocialProfile) -> (Result);
 }

@@ -20,6 +20,7 @@ import ManagementCanister "ica";
 import Iter "mo:base/Iter";
 import Bool "mo:base/Bool";
 import Order "mo:base/Order";
+import Debug "mo:base/Debug";
 
 actor kissmi {
   type ManagementCanister = ManagementCanister.ManagementCanister;
@@ -28,13 +29,8 @@ actor kissmi {
   type Account = Account.Account;
   type Video = TrieMap.TrieMap<Text, [Nat8]>;
 
-/*
-  let coinName : Text = "pawcoins";
-  let coinSymbol : Text = "MOC";
-  var coinSupply : Nat = 0;
-*/
+
   public type Subaccount = Blob;
-  // private var canisterId = "rww3b-zqaaa-aaaam-abioa-cai";
   public type PrincipalArray = [Principal];
 
   public type Content = {
@@ -43,28 +39,7 @@ actor kissmi {
     #Video : Nat
   };
 
-  /*
-  public type Comment = {
-    id : Nat;
-    contestantId : Nat;
-    text : Text;
-    commenter : Principal;
-    timestamp : Int
-  };
 
-  public type CommentCall = {
-    contestantId : Nat;
-    text : Text
-  };
-
-  public type CommentResponse = {
-    id : Nat;
-    contestantId : Nat;
-    text : Text;
-    commenter : Principal;
-    timestamp : Int
-  };
-  */
   public type Admin = Bool;
 
   public type ProposalProfile = {
@@ -110,16 +85,24 @@ actor kissmi {
     profilePic : Blob
   };
 
-   public type ContestCall = {
+  public type ContestCall = {
     name : Text;
-    end : Time;
+    end : Time
   };
 
   public type Contest = {
     name : Text;
     end : Time;
     id : Nat;
-    active : Bool
+    active : Bool;
+    completed:Bool;
+  };
+
+  public type SocialProfile = {
+    instagram: Text;
+    telegram: Text;
+    facebook: Text;
+    twitter: Text;
   };
 
   public type Profile = {
@@ -140,64 +123,13 @@ actor kissmi {
     admin = false
   };
 
-  //type Comments = TrieMap.TrieMap<Text, Comment>;
-
-  //var comments = TrieMap.TrieMap<Text, Comment>(Text.equal, Text.hash);
   var ledger = TrieMap.TrieMap<Account.Account, Nat>(Account.accountsEqual, Account.accountsHash);
   var profiles = TrieMap.TrieMap<Account.Account, Profile>(Account.accountsEqual, Account.accountsHash);
   var contestants = TrieMap.TrieMap<Text, Contestant>(Text.equal, Text.hash);
-  //var commentsLedger = TrieMap.TrieMap<Text, Comments>(Text.equal, Text.hash);
-  //var videos = TrieMap.TrieMap<Text, [Nat8]>(Text.equal, Text.hash);
   var contestLedger = TrieMap.TrieMap<Text, Contest>(Text.equal, Text.hash);
+  var socialProfiles = TrieMap.TrieMap<Account, SocialProfile>(Account.accountsEqual, Account.accountsHash);
 
-  /**
-  public shared (msg) func pawBalance() : async Result.Result<({ e8s : Nat64 }), Text> {
-    let ledger = actor ("ryjl3-tyaaa-aaaaa-aaaba-cai") : NNS;
-    let toAccount = Blob.toArray(AccountTransfer.accountIdentifier(msg.caller, AccountTransfer.defaultSubaccount()));
-    let result = await ledger.account_balance({ account = toAccount });
-    return #ok(result)
-  };
-**/
-  /*
-  public shared (msg) func transFerDonation(fromAccount : Principal, toAccoun : Principal, ammount : Nat) : async Result.Result<(), Text> {
-    let ledger = actor ("ryjl3-tyaaa-aaaaa-aaaba-cai") : NNS;
-    let toAccountP = Blob.toArray(AccountTransfer.accountIdentifier(toAccoun, AccountTransfer.defaultSubaccount()));
-    let fromAccountP = Blob.toArray(AccountTransfer.accountIdentifier(fromAccount, AccountTransfer.defaultSubaccount()));
 
-    let ammountNat : Nat64 = Nat64.fromNat(ammount);
-    let now = Time.now();
-    let result = await ledger.transfer({
-      memo = Nat64.fromNat(1);
-      from_subaccount = ?fromAccountP;
-      to = toAccountP;
-      amount = { e8s = ammountNat };
-      fee = { e8s = 10_000 };
-      created_at_time = ?{ timestamp_nanos = Nat64.fromNat(Int.abs(now)) }
-    });
-    return #ok()
-  };
-*/
-  /*
-  public shared (msg) func transFer(toAccoun : Principal) : async Result.Result<(), Text> {
-    try {
-      let ledger = actor ("ryjl3-tyaaa-aaaaa-aaaba-cai") : NNS;
-      let toAccount = Blob.toArray(AccountTransfer.accountIdentifier(toAccoun, AccountTransfer.defaultSubaccount()));
-      let now = Time.now();
-      let result = await ledger.transfer({
-        memo = Nat64.fromNat(1);
-        from_subaccount = null;
-        to = toAccount;
-        amount = { e8s = 100_000_000 };
-        fee = { e8s = 10_000 };
-        created_at_time = ?{ timestamp_nanos = Nat64.fromNat(Int.abs(now)) }
-      });
-
-      return #ok()
-    } catch (e) {
-      return #err(Error.message(e))
-    }
-  };
-*/
 
   public shared query (msg) func getProfile() : async Profile {
     let account : Account = {
@@ -210,33 +142,42 @@ actor kissmi {
     }
   };
 
-  /*
-  public shared query func getCommentProfile(principal : Text) : async Profile {
+
+ public shared (msg) func updateSocialProfile(profile : SocialProfile) : async Result.Result<SocialProfile,Text> {
     let account : Account = {
-      owner = Principal.fromText(principal);
+      owner = msg.caller;
       subaccount = null
     };
-    switch (profiles.get(account)) {
-      case null { return guestProfile };
-      case (?found) { return found }
-    }
-  };
-  */
-  /*
-  public shared (msg) func bannProposal(contestantId : Nat) : async Result.Result<(Text), Text> {
-    let owner = await verifyOwnership(Principal.fromText("sqehz-oaaaa-aaaap-qbgcq-cai"), msg.caller);
-    if (owner == true) {
-      switch (contestants.remove(Nat.toText(contestantId))) {
-        case null { #err "that proposal doesnt exist" };
-        case (?found) {
-          return #ok("removed!")
-        }
+    switch (socialProfiles.get(account)) {
+      case null {
+        socialProfiles.put(account, profile);
+        return #ok(profile)
+      };
+      case (?found) {
+        socialProfiles.put(account, profile);
+        return #ok(profile)
       }
-    } else {
-      #err ""
     }
   };
-*/
+
+
+
+
+   public shared (msg) func getSocialProfile() : async Result.Result<SocialProfile,Text> {
+    let account : Account = {
+      owner = msg.caller;
+      subaccount = null
+    };
+    switch (socialProfiles.get(account)) {
+      case null {
+        return #err("no found")
+      };
+      case (?found) {
+        return #ok(found)
+      }
+    }
+  };
+
   public shared (msg) func updateProfile(profile : UpdateProfile) : async Profile {
     let account : Account = {
       owner = msg.caller;
@@ -302,68 +243,6 @@ actor kissmi {
     return "breaking switch"
   };
 
-  /*
-  public shared func verifyOwnership(canisterId : Principal, principalId : Principal) : async Bool {
-    let called = actor ("aaaaa-aa") : ManagementCanister;
-    try {
-      let foo = await called.canister_status({ canister_id = canisterId });
-      return false
-    } catch (e) {
-      let canisterControllers = await parseControllersFromCanisterStatusErrorIfCallerNotController(Error.message(e));
-      let canisterControllersBuffer = Buffer.fromArray<Principal>(canisterControllers);
-      var returnBool : Bool = false;
-      Buffer.iterate(
-        canisterControllersBuffer,
-        func(x : Principal) {
-          if (x == principalId) {
-            returnBool := true
-          }
-        },
-      );
-      return returnBool
-    }
-  };
-*/
-
-  /*
-  public func parseControllersFromCanisterStatusErrorIfCallerNotController(errorMessage : Text) : async [Principal] {
-    let lines = Iter.toArray(Text.split(errorMessage, #text("\n")));
-    let words = Iter.toArray(Text.split(lines[1], #text(" ")));
-    var i = 2;
-    let controllers = Buffer.Buffer<Principal>(0);
-    while (i < words.size()) {
-      controllers.add(Principal.fromText(words[i]));
-      i += 1
-    };
-    Buffer.toArray<Principal>(controllers)
-  };
-  */
-
-  /*
-  public shared (msg) func addProposalVideoChunk(contestantId : Nat, chunk : [Nat8], chunkId : Nat) : async Result.Result<Nat, Text> {
-    switch (contestants.get(Nat.toText(contestantId))) {
-      case null { return #err("fail") };
-      case (?found) {
-        let newContestant : Contestant = {
-          id = found.id;
-          completed = found.completed;
-          content = #Video(chunkId +1);
-          description = found.description;
-          votesWallet = found.votesWallet;
-          votes = found.votes;
-          owner = msg.caller;
-          contest = found.contest
-        };
-        contestants.put(Nat.toText(contestantId), newContestant);
-        let id = Nat.toText(contestantId);
-        let chunkIdText = Nat.toText(chunkId);
-        let videoId = id #chunkIdText;
-        videos.put(videoId, chunk);
-        return #ok(contestantId)
-      }
-    }
-  };
-*/
   public shared query func getProposalProfilePic(contestantId : Nat) : async ?ProposalProfile {
     switch (contestants.get(Nat.toText(contestantId))) {
       case null { return null };
@@ -388,17 +267,7 @@ actor kissmi {
     }
   };
 
-  /*
-  public shared query func getVideoChunk(contestantId : Nat, chunkId : Nat) : async [Nat8] {
-    let id = Nat.toText(contestantId);
-    let chunkIdText = Nat.toText(chunkId);
-    let videoId = id #chunkIdText;
-    switch (videos.get(videoId)) {
-      case (null) { return [] };
-      case (?found) { return found }
-    }
-  };
-*/
+
   public shared (msg) func addProposalChunk(contestantId : Nat, chunks : Blob) : async Result.Result<(), Text> {
     let result = await getContestant(contestantId);
     if (Result.isOk(result)) {
@@ -443,57 +312,7 @@ actor kissmi {
     }
   };
 
-  /*
-  private func setDonatorBadged(donator : Principal) : async Result.Result<(), Text> {
-    let account : Account = {
-      owner = donator;
-      subaccount = null
-    };
-    switch (profiles.get(account)) {
-      case null {
-        let newProfile : Profile = {
-          name = guestProfile.name;
-          profilePic = null;
-          badget = true;
-          proposalsCompleted = 0;
-          lastProposal = guestProfile.lastProposal;
-          admin = false
-        };
-        profiles.put(account, newProfile);
 
-        return #ok()
-      };
-      case (?found) {
-        let imgBlob : ?Blob = found.profilePic;
-        let setBadge : Profile = {
-          name = found.name;
-          profilePic = imgBlob;
-          badget = true;
-          proposalsCompleted = found.proposalsCompleted;
-          lastProposal = found.lastProposal;
-          admin = false
-        };
-        profiles.put(account, setBadge);
-        return #ok()
-      }
-    }
-  };
-*/
-  /*
-  public shared (msg) func donateToProposal(contestantId : Nat, amount : Nat) : async Result.Result<(), Text> {
-    switch (contestants.get(Nat.toText(contestantId))) {
-      case null { #err "" };
-      case (?found) {
-        let result = await transFerDonation(msg.caller, found.votesWallet, amount);
-        if (Result.isOk(result)) {
-          let badgeResult = setDonatorBadged(msg.caller);
-          return #ok()
-        };
-        return #ok()
-      }
-    }
-  };
-*/
   public shared query func getContestant(contestantId : Nat) : async Result.Result<Contestant, Text> {
     switch (contestants.get(Nat.toText(contestantId))) {
       case null { return #err "not found" };
@@ -535,21 +354,21 @@ actor kissmi {
       owner = msg.caller;
       subaccount = ?defaultSub
     };
-      let newid = contestants.size();
-      let newContestant : Contestant = {
-        id = newid;
-        votes = contestant.votes;
-        description = contestant.description;
-        content = contestant.content;
-        votesWallet = msg.caller;
-        completed = false;
-        owner = msg.caller;
-        contest = 1
-      };
-      switch (contestants.put(Nat.toText(newid), newContestant)) {
-        case (added) {
-          return #ok(newid)
-        }
+    let newid = contestants.size();
+    let newContestant : Contestant = {
+      id = newid;
+      votes = contestant.votes;
+      description = contestant.description;
+      content = contestant.content;
+      votesWallet = msg.caller;
+      completed = false;
+      owner = msg.caller;
+      contest = contestant.contest;
+    };
+    switch (contestants.put(Nat.toText(newid), newContestant)) {
+      case (added) {
+        return #ok(newid)
+      }
     };
     return #err("Couldn't add the contestant")
   };
@@ -576,30 +395,13 @@ actor kissmi {
     return Buffer.toArray(ContestantBuffer)
   };
 
-  /*
-  public shared query func name() : async Text {
-    return coinName
-  };
-*/
+
 
   public shared query (msg) func caller() : async Text {
     return Principal.toText(msg.caller)
   };
 
-  /*
-  public shared query func symbol() : async Text {
-    return coinSymbol
-  };
-*/
-  /*
-  public shared query func totalSupply() : async Nat {
-    var coinSupply : Nat = 0;
-    for (coins in ledger.vals()) {
-      coinSupply += coins
-    };
-    return coinSupply
-  };
-*/
+
 
   private func getBalance(account : Account.Account) : Nat {
     switch (ledger.get(account)) {
@@ -608,13 +410,8 @@ actor kissmi {
     }
   };
 
-  /*
-  public shared query func balanceOf(account : Account.Account) : async (Nat) {
-    return getBalance(account)
-  };
-*/
 
-  
+
   public shared query (msg) func getKisses() : async Nat {
     let account : Account = {
       owner = msg.caller;
@@ -625,18 +422,8 @@ actor kissmi {
       case (?kisses) { return kisses }
     }
   };
-  
 
-  /*
-  private func _transfer(from : Account.Account, to : Account.Account, amount : Nat) {
-    var fromCoins = getBalance(from);
-    fromCoins := fromCoins -amount;
-    ledger.put(from, fromCoins);
-    var toCoins = getBalance(to);
-    toCoins := toCoins +amount;
-    ledger.put(to, toCoins)
-  };
-*/
+
   public shared query (msg) func session() : async Profile {
     let defaultSub : Account.Subaccount = _defaultSub();
     let account : Account = {
@@ -649,136 +436,12 @@ actor kissmi {
     }
   };
 
-/*
-  private func _airDrop(to : Account.Account) {
-    var toCoinsAirdrop = 100;
-    ledger.put(to, toCoinsAirdrop)
-  };
-*/
+
 
   private func _defaultSub() : Subaccount {
     return Blob.fromArrayMut(Array.init(32, 0 : Nat8))
   };
 
-  /*
-  public shared (msg) func transfer(from : Account.Account, to : Account.Account, amount : Nat) : async Result.Result<(), Text> {
-    switch (ledger.get(from)) {
-      case null { return #err "insufficient balance or non existing account" };
-      case (?coins) {
-        if (coins >= amount) {
-          _transfer(from, to, amount)
-        };
-        return #err "insuficient balance to perform operation"
-      }
-    }
-  };
-
-  let textPrincipals : [Text] = [
-    "un4fu-tqaaa-aaaab-qadjq-cai",
-    "un4fu-tqaaa-aaaac-qadjr-cai",
-    "un4fu-tqaaa-aaaad-qadjs-cai",
-    "un4fu-tqaaa-aaaae-qadjt-cai",
-    "un4fu-tqaaa-aaaaf-qadjv-cai",
-    "un4fu-tqaaa-aaaag-qadjw-cai",
-    "un4fu-tqaaa-aaaah-qadjx-cai",
-    "un4fu-tqaaa-aaaai-qadjy-cai",
-    "un4fu-tqaaa-aaaaj-qadjz-cai",
-    "un4fu-tqaaa-aaaak-qadk1-cai",
-  ];
-*/
-  /*
-  public shared func getAllStudentsPrincipalTest() : async [Principal] {
-    let principalsText : Buffer.Buffer<Text> = Buffer.fromArray(textPrincipals);
-    var index : Nat = 0;
-    var principalsReady = Buffer.Buffer<Principal>(10);
-
-    Buffer.iterate<Text>(
-      principalsText,
-      func(x) {
-        let newPrincipal = Principal.fromText(principalsText.get(index));
-        principalsReady.add(newPrincipal)
-      },
-    );
-    while(index<= principalsText.size()-1){
-                let newPrincipal = Principal.fromText(principalsText.get(index));
-                principalsReady.put(index,newPrincipal);
-                index += 1;
-             };
-    return Buffer.toArray(principalsReady)
-  };
-*/
-  /*
-  public shared (msg) func addNewComment(newComment : Text, contestantId : Nat) : async Result.Result<CommentResponse, Text> {
-    switch (commentsLedger.get(Nat.toText(contestantId))) {
-      case (null) {
-        let newId = Principal.toText(msg.caller) #Int.toText(Time.now());
-        let newIdNat = 0;
-        let newCommentData : Comment = {
-          id = newIdNat;
-          contestantId = contestantId;
-          text = newComment;
-          commenter = msg.caller;
-          timestamp = Time.now()
-        };
-        let newCommentResponse : CommentResponse = {
-          id = newIdNat;
-          contestantId = contestantId;
-          text = newComment;
-          commenter = msg.caller;
-          timestamp = Time.now()
-        };
-        let newCommentLedger : Comments = TrieMap.TrieMap<Text, Comment>(Text.equal, Text.hash);
-
-        newCommentLedger.put(newId, newCommentData);
-        commentsLedger.put(Nat.toText(contestantId), newCommentLedger);
-
-        return #ok(newCommentResponse)
-      };
-      case (?found) {
-        let newId = Principal.toText(msg.caller) #Int.toText(Time.now());
-        let newIdNat = found.size();
-        let newCommentData : Comment = {
-          id = newIdNat;
-          contestantId = contestantId;
-          text = newComment;
-          commenter = msg.caller;
-          timestamp = Time.now()
-        };
-        let newCommentResponse : CommentResponse = {
-          id = newIdNat;
-          contestantId = contestantId;
-          text = newComment;
-          commenter = msg.caller;
-          timestamp = Time.now()
-        };
-        found.put(newId, newCommentData);
-        #ok(newCommentResponse)
-      }
-    }
-  };
-*/
-  /*
-  public shared query func getComments(contestantId : Nat) : async Result.Result<[CommentResponse], Text> {
-    switch (commentsLedger.get(Nat.toText(contestantId))) {
-      case null { return #err "No comments found for this proposal" };
-      case (?commentsFound) {
-        let commentsBuffers : Buffer.Buffer<CommentResponse> = Buffer.Buffer<CommentResponse>(0);
-
-        for (comment in commentsFound.vals()) {
-          let newCommentResponse : CommentResponse = {
-            id = comment.id;
-            contestantId = comment.contestantId;
-            text = comment.text;
-            commenter = comment.commenter;
-            timestamp = comment.timestamp
-          };
-          commentsBuffers.add(newCommentResponse)
-        };
-        return #ok(Buffer.toArray(commentsBuffers))
-      }
-    }
-  };
-*/
   private func compareVotes(m1 : ContestantResponse, m2 : ContestantResponse) : Order.Order {
     switch (Int.compare(m1.votes, m2.votes)) {
       case (#greater) return #less;
@@ -804,32 +467,152 @@ actor kissmi {
   };
 
 
-  public shared(msg) func getActiveContest(): async Time {
-      switch(contestLedger.get(Nat.toText(0))){
-        case null {return 00000};
-        case(?found){
-            return found.end;
-        }
-      }
+
+
+    public shared query func getWinner() : async ContestantResponse {
+    let ContestantBuffer : Buffer.Buffer<ContestantResponse> = Buffer.Buffer<ContestantResponse>(0);
+    for (value in contestants.vals()) {
+      let contestantToResponse : ContestantResponse = {
+        id = value.id;
+        votes = value.votes;
+        description = value.description;
+        votesWallet = value.votesWallet;
+        completed = value.completed
+      };
+      ContestantBuffer.add(contestantToResponse)
+    };
+    ContestantBuffer.sort(compareVotes);
+    return Buffer.first(ContestantBuffer)
   };
 
 
 
-  public shared(msg) func stopActiveContest(): async Bool {
-     switch(contestLedger.get(Nat.toText(0))){
-        case null {return false};
-        case(?found){
-            let newContest:Contest = {
-              active=true;
-              end=0000000;
-              id=found.id;
-              name=found.name;
+
+
+
+  public shared(msg) func getActiveContest():async Result.Result<Contest,Text> {
+    for(value in contestLedger.vals()){
+      let now:Time = Time.now();
+      if(value.active == true){
+          if(value.completed == false){
+                return #ok(value);
+          };
+      };
+    };
+    return #err"no active contest"
+  };
+
+
+
+
+
+  private func restartVotes(){
+    for(value in contestants.vals()){
+    switch (contestants.get(Nat.toText(value.id))) {
+      case null {  };
+      case (?found) {
+        let newContestant : Contestant = {
+          id = value.id;
+          votes = 0;
+          description = found.description;
+          content = found.content;
+          votesWallet = found.votesWallet;
+          completed = false;
+          owner = found.owner;
+          contest = found.contest
+        };
+        ignore contestants.replace(Nat.toText(value.id), newContestant);
+      }
+    }    };
+  };
+
+
+  public shared(msg) func stopActiveContest(contestid:Nat): async Bool {
+       switch(contestLedger.get(Nat.toText(contestid))){
+        case null { return false};
+        case (?found) {
+            let activating:Contest = {
+                active = false;
+                completed = true;
+                id=found.id;
+                name=found.name;
+                end=found.end;
             };
-             contestLedger.put(Nat.toText(0),newContest);
-             return true
+            restartVotes();
+            contestLedger.put(Nat.toText(contestid),activating);
+            return true;
         }
-      }
+      };
+      return false;
   };
+
+
+
+  public shared(msg) func startActiveContest(contestid:Nat): async Bool {
+      switch(contestLedger.get(Nat.toText(contestid))){
+        case null { return false};
+        case (?found) {
+            let activating:Contest = {
+                active = true;
+                completed = false;
+                id=found.id;
+                name=found.name;
+                end=found.end;
+            };
+            contestLedger.put(Nat.toText(contestid),activating);
+            return true;
+        }
+      };
+      return false;
+  };
+
+
+
+
+  public shared(msg) func getUpcomingContest():async Result.Result<Contest,Text> {
+    for(value in contestLedger.vals()){
+      let now:Time = Time.now();
+      if(value.active == false){
+          if(value.completed == false){
+              if(value.end > now){
+                return #ok(value);
+              };
+          };
+      };
+    };
+    return #err"no upcoming contest"
+  };
+
+   public shared(msg) func getAllUnactiveContests():async Result.Result<[Contest],Text> {
+    let upcomingContests:Buffer.Buffer<Contest> = Buffer.Buffer<Contest>(0);
+    for(value in contestLedger.vals()){
+      let now:Time = Time.now();
+      Debug.print(debug_show(now));
+      Debug.print(debug_show(value.end));
+      if(value.active == false){
+          if(value.completed == false){
+              if((value.end* 1_000_000) > now){
+                  upcomingContests.add(value);
+              };
+          };
+      };
+    };
+    return #ok(Buffer.toArray(upcomingContests));
+  };
+
+
+
+  public shared(msg) func history(): async[Contest]{
+      let pastContests:Buffer.Buffer<Contest> = Buffer.Buffer<Contest>(0);
+      for(value in contestLedger.vals()){
+        if(value.completed == true){
+          pastContests.add(value)
+        };
+      };
+      return Buffer.toArray(pastContests);
+  };
+
+
 
 
 
@@ -839,26 +622,23 @@ actor kissmi {
       subaccount = null
     };
     let newid = contestLedger.size();
-    let newContest:Contest = {
-        active=true;
-        end=contest.end;
-        id=newid;
-        name=contest.name;
+    let newContest : Contest = {
+      active = false;
+      end = contest.end;
+      id = newid;
+      name = contest.name;
+      completed = false;
     };
     switch (profiles.get(account)) {
       case null { return false };
       case (?found) {
         if (found.admin == true) {
-          contestLedger.put(Nat.toText(0), newContest);
+          contestLedger.put(Nat.toText(newid), newContest);
           return true
         };
         return false
       }
     }
   };
-
-
-
-
 
 }

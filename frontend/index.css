@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
 body {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -8,10 +10,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   /* Gradient background */
+  
+  /*
   background: linear-gradient(135deg, #FFD3A5 0%, #FD6585 100%);
   color: #424242;
   height: 100vh;
   width: 100vw;
+  */
 }
 
 
@@ -25,16 +30,20 @@ html {
 
 .loader-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 70vh;
+  flex-direction: column;
+  align-content: center;
+  width: 100vh;
+
+  /*
+  align-items: center;*/
+  /*height: 70vh;*/
   /* Adjust this to position the loader */
 }
 
 .loader {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /*align-items: center;*/
   flex-direction: column;
   text-align: center;
   color: black;
@@ -264,41 +273,3 @@ html {
   justify-content: center;
 }
 
-.addCards {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin-left: 5px;
-  margin-right: 5px;
-
-  /*
-  justify-content: center;
-  align-items: center;
-  */
-}
-
-.title {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 50px;
-  line-height: 99.5%;
-  /* identical to box height, or 50px */
-
-  text-align: center;
-
-  color: #FFFFFF;
-}
-
-.title2 {
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 30px;
-line-height: 99.5%;
-/* identical to box height, or 30px */
-
-text-align: center;
-
-color: #FFFFFF;
-}
