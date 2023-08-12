@@ -1,6 +1,8 @@
 # KISMI.APP & KISMI community
 ### Web2/Web3 Photo Voting App (Gamified real-time Photo Contests).
 
+ICP: [https://65swt-byaaa-aaaap-qbhoa-cai.icp0.io/](https://65swt-byaaa-aaaap-qbhoa-cai.icp0.io/) 
+
 Linktree: [https://linktr.ee/kismi](https://linktr.ee/kismi)
 
 Discord: [https://discord.com/invite/YXrRzqG3tC](https://discord.com/invite/YXrRzqG3tC)  
